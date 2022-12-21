@@ -36,8 +36,6 @@
         android:clickable="true"
         android:focusable="true"
         android:longClickable="true"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
         tools:itemCount="12"
         tools:listitem="@layout/note_item" />
 

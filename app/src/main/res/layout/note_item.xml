@@ -24,10 +24,11 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/desc_textView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:lineSpacingExtra="4dp"
-            android:maxLines="4"
+            android:minLines="1"
+            android:maxLines="6"
             tools:text="Атрибут tools:ignore похож по своему поведению на Java-аннотацию @SuppressWarnings, подсказывающему инструменту Lint не обращать внимания на код. Аналогично можно не обращать на какой-то атрибут в XML-файле.
 Самый распространённый случай - использование ImageView. Lint всегда недоволен, если у данного компонента нет атрибута android:contentDescription. Профессионально сделанное приложение должно использовать данный атрибут. Но в некоторых ситуациях ImageView может быть вспомогательным элементом экрана, не несущим смысловой нагрузки, например, разделитель. И тогда можно подавить предупреждение следующим образом."
             />

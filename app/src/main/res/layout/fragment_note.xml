@@ -6,6 +6,12 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="HELLO FROM NOTE FRAGMENT"/>
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/title_editText"
         android:layout_width="match_parent"

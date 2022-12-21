@@ -2,13 +2,13 @@ package com.software1t.notes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.software1t.notes.databinding.ActivityMainBinding
-import com.software1t.notes.ui.home.recyclerview.NotesAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,10 +37,15 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.floatingActionButton.setOnClickListener { view ->
+
+            navController.navigateUp() // to clear previous navigation history
+            navController.navigate(R.id.noteFragment)
+
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

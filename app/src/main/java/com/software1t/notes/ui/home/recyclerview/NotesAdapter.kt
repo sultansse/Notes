@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,10 +33,10 @@ class NotesAdapter :
         holder.title.text = item.title
         holder.desc.text = item.desc
 
-       /* holder.itemView.constraint.setOnClickListener() {
+        holder.itemView.findViewById<CardView>(R.id.item_cardView).setOnClickListener() {
             Navigation.findNavController(holder.itemView)
-                .navigate(R.id.action_to_detailedCityFragment)
-        }*/
+                .navigate(R.id.action_containerFragment_to_noteFragment)
+        }
     }
 
 }
