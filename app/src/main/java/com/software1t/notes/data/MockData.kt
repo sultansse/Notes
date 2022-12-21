@@ -7,7 +7,7 @@ class MockData{
     val allCities = mutableListOf(
         Note(
             "Astana",
-            "Astana (earlier - Akmolinsk, Tselinograd, Akmola, Nur-Sultan) - the capital of the Republic of Kazakhstan",
+            "Astana (earlier ",
         ),
         Note(
             "Aktobe",
@@ -19,7 +19,7 @@ class MockData{
         ),
         Note(
             "Almaty",
-            "Alma-Ata, Almaty (Almaty until 1921 - Verny) - a city of republican significance in Kazakhstan",
+            "Alma-Ata,fsf fds",
         ),
         Note(
             "Shymkent",
