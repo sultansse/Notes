@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentContainerBinding
 import com.software1t.notes.ui.home.recyclerview.NotesAdapter
 
@@ -40,9 +41,11 @@ class ContainerFragment : Fragment() {
         binding.optionsImageView.setOnClickListener {
             if (linearOrGrid == 0) {
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+                binding.optionsImageView.setImageResource(R.drawable.ic_outline_linear_view_24)
                 linearOrGrid = 1
             }else{
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
+                binding.optionsImageView.setImageResource(R.drawable.ic_baseline_grid_view_24)
                 linearOrGrid = 0
             }
         }
