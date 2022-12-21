@@ -14,11 +14,13 @@ import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentContainerBinding
 import com.software1t.notes.ui.home.recyclerview.NotesAdapter
 
+
 class ContainerFragment : Fragment() {
 
     private lateinit var viewModel: ContainerFragmentViewModel
     private var _binding: FragmentContainerBinding? = null
     private val binding get() = _binding!!
+    private var isLinear = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,24 +33,19 @@ class ContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ContainerFragmentViewModel::class.java]
 
-
         val adapter = NotesAdapter()
         binding.recyclerView.adapter = adapter;
-        viewModel.notes.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-        }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        var linearOrGrid = 0
 
         binding.optionsImageView.setOnClickListener {
-            if (linearOrGrid == 0) {
+            if (isLinear) {
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
                 binding.optionsImageView.setImageResource(R.drawable.ic_outline_linear_view_24)
-                linearOrGrid = 1
+                isLinear = false
             } else {
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.optionsImageView.setImageResource(R.drawable.ic_baseline_grid_view_24)
-                linearOrGrid = 0
+                isLinear = true
             }
         }
 
@@ -67,6 +64,12 @@ class ContainerFragment : Fragment() {
                 return false
             }
         })
+
+
+
+        viewModel.notes.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
 
     }
 
