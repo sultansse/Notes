@@ -6,27 +6,31 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="12dp"
+        app:cardBackgroundColor="@color/dark_card"
+        app:cardCornerRadius="30dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_margin="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
             app:iconifiedByDefault="false"
             app:queryHint="Search in notes" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/options_imageView"
             android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="20dp"
             app:srcCompat="@drawable/ic_baseline_grid_view_24" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

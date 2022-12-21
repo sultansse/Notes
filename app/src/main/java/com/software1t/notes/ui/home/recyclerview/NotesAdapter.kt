@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -33,7 +32,8 @@ class NotesAdapter :
         holder.title.text = item.title
         holder.desc.text = item.desc
 
-        holder.itemView.findViewById<CardView>(R.id.item_cardView).setOnClickListener() {
+        //bad because a lot of listener calls
+        holder.itemView.setOnClickListener() {
             Navigation.findNavController(holder.itemView)
                 .navigate(R.id.action_containerFragment_to_noteFragment)
         }
