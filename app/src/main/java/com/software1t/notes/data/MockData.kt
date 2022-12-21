@@ -23,7 +23,7 @@ class MockData{
         ),
         Note(
             "Shymkent",
-            "Shymkent (a city in the south of Kazakhstan, one of the three cities of the country",
+            "SULTAN (a city in the south of Kazakhstan, one of the three cities of the country",
         ),
         Note(
             "Taraz",

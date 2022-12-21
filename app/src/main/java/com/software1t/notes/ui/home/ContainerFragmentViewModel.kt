@@ -15,4 +15,15 @@ class ContainerFragmentViewModel : ViewModel() {
     init {
         _notes.value = MockData().allCities
     }
+
+    fun onSearchDataChange(query: String?) {
+        var temp: MutableList<Note> = MockData().allCities.toMutableList()
+        if (query.toString() != "") {
+            temp = temp.filter { note ->
+                note.toString().lowercase().contains(query.toString().lowercase())
+            }.toMutableList()
+
+        }
+        _notes.value = temp
+    }
 }

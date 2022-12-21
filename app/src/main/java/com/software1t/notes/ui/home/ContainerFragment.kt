@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,12 +44,25 @@ class ContainerFragment : Fragment() {
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
                 binding.optionsImageView.setImageResource(R.drawable.ic_outline_linear_view_24)
                 linearOrGrid = 1
-            }else{
+            } else {
                 binding.recyclerView.layoutManager = LinearLayoutManager(context)
                 binding.optionsImageView.setImageResource(R.drawable.ic_baseline_grid_view_24)
                 linearOrGrid = 0
             }
         }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.onSearchDataChange(newText)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.onSearchDataChange(query)
+                return false
+            }
+        })
 
     }
 
