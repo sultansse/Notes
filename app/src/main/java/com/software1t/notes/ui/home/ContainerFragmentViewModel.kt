@@ -11,6 +11,7 @@ class ContainerFragmentViewModel : ViewModel() {
     //    private val mockData = MockData.getInstance()
     private var _notes: MutableLiveData<List<Note>> = MutableLiveData()
     val notes: LiveData<List<Note>> get() = _notes
+    var isEmpty: Boolean = false
 
     init {
         _notes.value = MockData().allCities
@@ -23,6 +24,9 @@ class ContainerFragmentViewModel : ViewModel() {
                 note.toString().lowercase().contains(query.toString().lowercase())
             }.toMutableList()
 
+        }
+        if (temp.isEmpty()) {
+            isEmpty = true
         }
         _notes.value = temp
     }

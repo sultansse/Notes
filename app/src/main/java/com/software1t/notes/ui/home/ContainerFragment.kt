@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -59,6 +60,9 @@ class ContainerFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
+                if (viewModel.isEmpty) {
+                    Toast.makeText(requireContext(), "Nothing found :( ", Toast.LENGTH_SHORT).show()
+                }
                 viewModel.onSearchDataChange(query)
                 return false
             }
