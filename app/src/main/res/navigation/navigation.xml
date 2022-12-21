@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav"
+    app:startDestination="@id/containerFragment">
+
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.software1t.notes.ui.detailed.NoteFragment"
+        android:label="NoteFragment" />
+    <fragment
+        android:id="@+id/containerFragment"
+        android:name="com.software1t.notes.ui.home.ContainerFragment"
+        android:label="ContainerFragment" >
+        <action
+            android:id="@+id/action_containerFragment_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
+</navigation>
