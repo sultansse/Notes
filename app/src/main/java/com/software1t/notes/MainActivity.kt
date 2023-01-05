@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.noteFragment,
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
 
 
 
