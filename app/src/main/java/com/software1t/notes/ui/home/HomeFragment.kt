@@ -11,27 +11,27 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.software1t.notes.R
-import com.software1t.notes.databinding.FragmentContainerBinding
+import com.software1t.notes.databinding.FragmentHomeBinding
 import com.software1t.notes.ui.home.recyclerview.NotesAdapter
 
 
-class ContainerFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: ContainerFragmentViewModel
-    private var _binding: FragmentContainerBinding? = null
+    private lateinit var viewModel: HomeFragmentViewModel
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var isLinear = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentContainerBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[ContainerFragmentViewModel::class.java]
+        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
 
         val adapter = NotesAdapter()
         binding.recyclerView.adapter = adapter;

@@ -10,7 +10,7 @@
         android:label="NoteFragment" />
     <fragment
         android:id="@+id/containerFragment"
-        android:name="com.software1t.notes.ui.home.ContainerFragment"
+        android:name="com.software1t.notes.ui.home.HomeFragment"
         android:label="ContainerFragment" >
         <action
             android:id="@+id/action_containerFragment_to_noteFragment"

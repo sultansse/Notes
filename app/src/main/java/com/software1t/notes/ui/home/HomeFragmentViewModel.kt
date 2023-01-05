@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.software1t.notes.data.MockData
 import com.software1t.notes.ui.home.recyclerview.Note
 
-class ContainerFragmentViewModel : ViewModel() {
+class HomeFragmentViewModel : ViewModel() {
 
     //    private val mockData = MockData.getInstance()
     private var _notes: MutableLiveData<List<Note>> = MutableLiveData()

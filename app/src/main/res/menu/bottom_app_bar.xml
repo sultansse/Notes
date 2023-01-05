@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/checkbox"
+        android:icon="@drawable/ic_outline_check_box_24"
+        android:title="checkbox"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/draw"
+        android:icon="@drawable/ic_outline_brush_24"
+        android:title="draw"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/speech"
+        android:icon="@drawable/ic_outline_mic_none_24"
+        android:title="speech"
+        tools:ignore="HardcodedText" />
+    <item
+        android:id="@+id/image"
+        android:icon="@drawable/ic_outline_image_24"
+        android:title="image"
+        tools:ignore="HardcodedText" />
+</menu>
