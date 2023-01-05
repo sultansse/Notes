@@ -1,6 +1,9 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Notes" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textColorHint">@color/white_text</item>
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/dark_background</item>
         <item name="colorPrimaryVariant">@color/dark_background</item>
