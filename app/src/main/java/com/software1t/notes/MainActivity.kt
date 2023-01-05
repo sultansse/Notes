@@ -2,8 +2,11 @@ package com.software1t.notes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.snackbar.Snackbar
 import com.software1t.notes.databinding.ActivityMainBinding
 
@@ -23,16 +26,14 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        val toolbar = binding.toolbar
-        toolbar.setLogo(R.drawable.ic_launcher_foreground)
-        setSupportActionBar(toolbar)
-        /*   val appBarConfiguration = AppBarConfiguration(
-               setOf(
-                   R.id.containerFragment,
-                   R.id.noteFragment,
-               )
-           )*/
-//        setupActionBarWithNavController(navController/*, appBarConfiguration*/)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.containerFragment,
+                R.id.noteFragment,
+            )
+        )
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+
 
 
         binding.floatingActionButton.setOnClickListener { view ->
