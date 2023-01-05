@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    app:strokeWidth="0.4dp"
+    app:strokeColor="@color/white"
     app:cardCornerRadius="8dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -19,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            tools:text="Some title" />
+            tools:text="Some title about note" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/desc_textView"
@@ -28,9 +30,7 @@
             android:layout_margin="10dp"
             android:lineSpacingExtra="4dp"
             android:maxLines="6"
-            tools:text="Атрибут tools:ignore похож по своему поведению на Java-аннотацию @SuppressWarnings, подсказывающему инструменту Lint не обращать внимания на код. Аналогично можно не обращать на какой-то атрибут в XML-файле.
-Самый распространённый случай - использование ImageView. Lint всегда недоволен, если у данного компонента нет атрибута android:contentDescription. Профессионально сделанное приложение должно использовать данный атрибут. Но в некоторых ситуациях ImageView может быть вспомогательным элементом экрана, не несущим смысловой нагрузки, например, разделитель. И тогда можно подавить предупреждение следующим образом."
-            />
+            tools:text="some description text as notes text on cards on main page, it should be little bit be longer so i am just writing anything" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
