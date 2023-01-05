@@ -14,12 +14,21 @@
         app:cardBackgroundColor="@color/dark_card"
         app:cardCornerRadius="30dp">
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/menu_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="20dp"
+            app:srcCompat="@drawable/ic_baseline_menu_24" />
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
+            android:layout_gravity="center|center_vertical"
             app:iconifiedByDefault="false"
+            android:layout_marginStart="20dp"
             app:searchIcon="@null"
             app:queryHint="Search in notes" />
 
