@@ -6,4 +6,9 @@
     <string name="questions">Frequently Asked Questions</string>
     <string name="rate">Rate us</string>
     <string name="header_nav_drawer">Notes</string>
+    <string name="header_nav_drawer_desc">created with love</string>
+    <string name="add">Add</string>
+    <string name="color">Color</string>
+    <string name="date">last changes: 21.06.2022 13:46</string>
+    <string name="more">More</string>
 </resources>
