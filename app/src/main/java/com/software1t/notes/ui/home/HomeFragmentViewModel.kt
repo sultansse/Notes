@@ -1,24 +1,34 @@
 package com.software1t.notes.ui.home
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.software1t.notes.data.MockData
-import com.software1t.notes.ui.home.recyclerview.Note
+import com.software1t.notes.data.NoteDatabase
+import com.software1t.notes.ui.home.recyclerview.NoteItem
 
-class HomeFragmentViewModel : ViewModel() {
+class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
-    //    private val mockData = MockData.getInstance()
-    private var _notes: MutableLiveData<List<Note>> = MutableLiveData()
-    val notes: LiveData<List<Note>> get() = _notes
+    private val noteDao = NoteDatabase.getInstance(application).noteDao()
+    private fun insertMockData() {
+//        for (note in MockData().mockNotes) noteDao.insertNote(note) //111
+    }
+
+    //    private var _notes: MutableLiveData<List<Note>> = noteDao.getAllNotes() as MutableLiveData<List<Note>> //111
+    private var _notes: MutableLiveData<List<NoteItem>> = MutableLiveData() //222
     var isEmpty: Boolean = false
 
     init {
-        _notes.value = MockData().allCities
+        _notes.value = MockData().allCities //222
+//        insertMockData() //1111
     }
 
+    //    val notes: LiveData<List<Note>> get() = _notes //11111
+    val notes: LiveData<List<NoteItem>> get() = _notes //222
+
     fun onSearchDataChange(query: String?) {
-        var temp: MutableList<Note> = MockData().allCities.toMutableList()
+        var temp: MutableList<NoteItem> = MockData().allCities.toMutableList()
         if (query.toString() != "") {
             temp = temp.filter { note ->
                 note.toString().lowercase().contains(query.toString().lowercase())
@@ -30,4 +40,17 @@ class HomeFragmentViewModel : ViewModel() {
         }
         _notes.value = temp
     }
+
+
+//    private fun insertNote(note: Note) {
+//        noteDao.insertNote(note)
+//    }
+//
+//    private fun updateNote(note: Note) {
+//        noteDao.updateNote(note)
+//    }
+//
+//    private fun deleteNote(note: Note) {
+//        noteDao.deleteNote(note)
+//    }
 }

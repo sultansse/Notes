@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.software1t.notes.R
@@ -17,7 +17,7 @@ import com.software1t.notes.ui.home.recyclerview.NotesAdapter
 
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeFragmentViewModel
+    private val viewModel: HomeFragmentViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var isLinear = true
@@ -31,10 +31,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[HomeFragmentViewModel::class.java]
 
         val adapter = NotesAdapter()
-        binding.recyclerView.adapter = adapter;
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.optionsImageView.setOnClickListener {
@@ -64,8 +63,6 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
-
-
 
         viewModel.notes.observe(viewLifecycleOwner) {
             adapter.submitList(it)

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NoteViewModel : ViewModel() {
+class EditNoteViewModel : ViewModel() {
 
     private var _title: MutableLiveData<String> = MutableLiveData<String>().apply { "" }
     val title: LiveData<String> get() = _title

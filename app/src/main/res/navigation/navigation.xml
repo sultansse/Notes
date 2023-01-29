@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.software1t.notes.ui.detailed.NoteFragment"
+        android:name="com.software1t.notes.ui.detailed.EditNoteFragment"
         android:label="NoteFragment" />
     <fragment
         android:id="@+id/containerFragment"

@@ -3,22 +3,23 @@ package com.software1t.notes.ui.home.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.R
 
 
 class NotesAdapter :
-    ListAdapter<Note, NotesAdapter.ItemViewHolder>(
+    ListAdapter<NoteItem, NotesAdapter.ItemViewHolder>(
         RowItemDiffCallbackCity()
     ) {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView = view.findViewById(R.id.title_textView)
-        val desc: TextView = view.findViewById(R.id.desc_textView)
+        val title: MaterialTextView = view.findViewById(R.id.title_textView)
+        val description: MaterialTextView = view.findViewById(R.id.desc_textView)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -30,7 +31,7 @@ class NotesAdapter :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = getItem(position)
         holder.title.text = item.title
-        holder.desc.text = item.desc
+        holder.description.text = item.description
 
         //bad because a lot of listener calls
         holder.itemView.setOnClickListener() {
@@ -41,13 +42,13 @@ class NotesAdapter :
 
 }
 
-class RowItemDiffCallbackCity : DiffUtil.ItemCallback<Note>() {
+class RowItemDiffCallbackCity : DiffUtil.ItemCallback<NoteItem>() {
 
-    override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+    override fun areContentsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
         return oldItem == newItem
     }
 
-    override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+    override fun areItemsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
         return oldItem == newItem
     }
 

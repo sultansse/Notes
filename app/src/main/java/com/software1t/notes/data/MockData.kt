@@ -1,108 +1,122 @@
 package com.software1t.notes.data
 
-import com.software1t.notes.ui.home.recyclerview.Note
+import com.software1t.notes.ui.home.recyclerview.NoteItem
 
-class MockData{
+class MockData {
+
+    val mockNotes = mutableListOf(
+        Note(1, "Meeting with team", "Discuss progress on project XYZ"),
+        Note(2, "Grocery list", "milk, bread, eggs"),
+        Note(3, "Reminder", "Call mom at 5pm"),
+        Note(4, "Ideas", "New app feature: Voice notes"),
+    )
 
     val allCities = mutableListOf(
-        Note(
+        NoteItem(
+            1,
             "Astana",
             "Astana (earlier ",
         ),
-        Note(
+        NoteItem(
+            2,
             "Aktobe",
             "Aktobe (until 1999 Aktobe) is a city in Western Kazakhstan, the administrative center of the Aktobe region",
         ),
-        Note(
+        NoteItem(
+            3,
             "Karaganda",
             "Karaganda is a city in Kazakhstan, the administrative center of the Karaganda region",
         ),
-        Note(
+        NoteItem(
+            4,
             "Almaty",
             "Alma-Ata,fsf fds",
         ),
-        Note(
+        NoteItem(
+            5,
             "Shymkent",
             "SULTAN (a city in the south of Kazakhstan, one of the three cities of the country",
         ),
-        Note(
+        NoteItem(
+            6,
             "Taraz",
             "Taraz (formerly Zhambyl) is the administrative center of Zhambyl Province in Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            7,
             "Pavlodar",
             "Pavlodar is a city located in northeastern Kazakhstan, 450 km northeast of the capital Astana",
         ),
-        Note(
+        NoteItem(
+            8,
             "Ust-Kamenogorsk",
             "Ust-Kamenogorsk (Kazakh: Öskemen Sound) is the largest city in eastern Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            9,
             "Semey",
             "Semey (until 2007 - Semipalatinsk) is a city in eastern Kazakhstanlocated on both banks of the Irtysh River",
         ),
-        Note(
+        NoteItem(
+            10,
             "Atyrau",
             "Atyrau (until 1991 - Guryev) is a city in Kazakhstan, the administrative center of Atyrau Region",
         ),
-        Note(
+        NoteItem(
+            11,
             "Kyzylorda",
             "Kyzylorda (formerly Kamysty, Ak-Mechet, Perovsk, Kzyl-Orda) is a city in Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            12,
             "Kostanay",
             "Kostanay (formerly - Nikolaevsk, Kostanay - a city in Kazakhstan, the administrative center of Kostanay region",
         ),
-        Note(
+        NoteItem(
+            13,
             "Uralsk",
             "Uralsk or Oral (until 1775 - Yaitsky town) is a city in the European part of Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            14,
             "Petropavlovsk",
             "Petropavlovsk is a city in northern Kazakhstan, the administrative center of the NKR",
         ),
-        Note(
+        NoteItem(
+            15,
             "Aktau",
             "Aktau (Kazakh: Sound Aktau, Aqtau; White Mountain) is a port city in the south-west of Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            16,
             "Turkestan",
             "Turkestan is a city in southern Kazakhstan, near the Syr Darya River",
         ),
-        Note(
+        NoteItem(
+            17,
             "Temirtau",
             "Temirtau (Kazakh: Теміртау) is a city in Kazakhstan, located in the Karaganda Region",
         ),
-        Note(
+        NoteItem(
+            18,
             "Kokshetau",
             "Kokshetau (until 1993 - Kokchetav) is a city in Kazakhstan, since 1999",
         ),
-        Note(
+        NoteItem(
+            19,
             "Taldykorgan",
             "Taldykorgan (until 1993 - Taldy-Kurgan, until 1920 - Gavrilovka) is a city in the south-east",
         ),
-        Note(
+        NoteItem(
+            20,
             "Ekibastuz",
             "Ekibastuz is a city of regional subordination in the west of the Pavlodar region of Kazakhstan",
         ),
-        Note(
+        NoteItem(
+            21,
             "Rudnyi",
             "A city on the Tobol River in the Kostanay region of Kazakhstan",
-        ),
-
         )
+    )
 
-
-/*    companion object {
-        private var INSTANCE: MockData? = null
-
-        fun getInstance(): MockData {
-            var instance = INSTANCE
-            if (instance == null) {
-                instance = MockData()
-                INSTANCE = instance
-            }
-            return instance
-        }
-    }*/
 }
