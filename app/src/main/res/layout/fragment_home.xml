@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_margin="12dp"
-        app:cardBackgroundColor="@color/dark_card"
+        app:cardBackgroundColor="?attr/colorSecondary"
         app:cardCornerRadius="30dp">
 
         <com.google.android.material.imageview.ShapeableImageView
