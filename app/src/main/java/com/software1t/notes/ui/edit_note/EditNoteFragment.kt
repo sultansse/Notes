@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.detailed
+package com.software1t.notes.ui.edit_note
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -27,6 +27,15 @@ class EditNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[EditNoteViewModel::class.java]
 
+
+
+
+        binding.submit.setOnClickListener {
+            viewModel.submitToDatabase(
+                binding.titleEditText.text.toString(),
+                binding.descEditText.text.toString()
+            )
+        }
     }
 
 }

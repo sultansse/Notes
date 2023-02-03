@@ -36,6 +36,9 @@ class HomeFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
+        viewModel.observeNotes(this)
+
+
         binding.optionsImageView.setOnClickListener {
             if (isLinear) {
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
@@ -56,7 +59,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (viewModel.isEmpty) {
+                if (viewModel.isDataEmpty) {
                     Toast.makeText(requireContext(), "Nothing found :( ", Toast.LENGTH_SHORT).show()
                 }
                 viewModel.onSearchDataChange(query)

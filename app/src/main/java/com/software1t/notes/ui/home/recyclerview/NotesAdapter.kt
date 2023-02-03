@@ -3,7 +3,6 @@ package com.software1t.notes.ui.home.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -34,10 +33,10 @@ class NotesAdapter :
         holder.description.text = item.description
 
         //bad because a lot of listener calls
-        holder.itemView.setOnClickListener() {
-            Navigation.findNavController(holder.itemView)
-                .navigate(R.id.action_containerFragment_to_noteFragment)
-        }
+//        holder.itemView.setOnClickListener() {
+//            Navigation.findNavController(holder.itemView)
+//                .navigate(R.id.action_containerFragment_to_noteFragment)
+//        }
     }
 
 }

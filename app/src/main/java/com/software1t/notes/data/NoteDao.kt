@@ -8,6 +8,9 @@ interface NoteDao {
     @Insert
     fun insertNote(note: Note)
 
+    @Insert
+    fun insertAllNotes(notes: List<Note>)
+
     @Update
     fun updateNote(note: Note)
 
