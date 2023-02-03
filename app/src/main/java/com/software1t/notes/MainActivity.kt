@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import com.google.android.material.snackbar.Snackbar
 import com.software1t.notes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,23 +22,15 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.homeFragment,
-                R.id.noteFragment,
-            )
-        )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
 
 
-
-        binding.floatingActionButton.setOnClickListener { view ->
+        binding.floatingActionButton.setOnClickListener {
 
             navController.navigateUp() // to clear previous navigation history
             navController.navigate(R.id.noteFragment)
 
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
         }
     }
 
