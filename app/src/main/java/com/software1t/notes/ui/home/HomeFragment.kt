@@ -42,8 +42,6 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        viewModel.observeNotes(this)
-
 
         binding.optionsImageView.setOnClickListener {
             if (isLinear) {

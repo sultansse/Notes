@@ -2,25 +2,25 @@ package com.software1t.notes.ui.edit_note
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
 
-class EditNoteViewModel(application: Application) : AndroidViewModel(application) {
+class EditNoteViewModel(
+    application: Application,
+    private val noteId: Long,
+) : AndroidViewModel(application) {
 
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
+    val note = noteDao.getNote(noteId)
+    var isNewNote: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
-    fun getNote(noteId: Long): LiveData<Note> {
-        return noteDao.getNote(noteId)
+    fun onSubmit(title: String, desc: String) {
+        if (noteId == -1L) {
+            noteDao.insertNote(Note(title = title, description = desc))
+        } else {
+            noteDao.updateNote(Note(id = noteId, title = title, description = desc))
+        }
     }
-
-    fun insertNote(title: String, desc: String) {
-        noteDao.insertNote(Note(title = title, description = desc))
-    }
-
-    fun updateNote(id: Long, title: String, desc: String) {
-        noteDao.updateNote(Note(id = id, title = title, description = desc))
-    }
-
 
 }

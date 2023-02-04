@@ -58,7 +58,7 @@ class RowItemDiffCallbackCity : DiffUtil.ItemCallback<NoteItem>() {
     }
 
     override fun areItemsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
 }

@@ -11,41 +11,46 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     var isDataEmpty: Boolean = false
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
-    private var _notes = MutableLiveData<List<NoteItem>>()
-    val notes: LiveData<List<NoteItem>> get() = _notes
+    private var _notes = MediatorLiveData<List<Note>>()
+    private val allNotes = noteDao.getAllNotes()
+    val notes: LiveData<List<NoteItem>>
+        get() = _notes.map {
+            it.map { note ->
+                NoteItem(
+                    note.id,
+                    note.title,
+                    note.description
+                )
+            }
+        }
+    private val query = MutableLiveData<String>()
 
     init {
         insertMockData()
-    }
+        _notes.addSource(allNotes) { noteList ->
+            _notes.value = noteList
+        }
+        _notes.addSource(query) { newQuery ->
+            var filteredNotes = allNotes.value ?: return@addSource
 
-    fun observeNotes(lifecycleOwner: LifecycleOwner) {
-        noteDao.getAllNotes().observe(lifecycleOwner, Observer { notes ->
-            _notes.value = mapNotesToNoteItems(notes)
-        })
-    }
-
-    fun onSearchDataChange(query: String?) {
-        noteDao.getAllNotes().observeForever { notes ->
-            var filteredNotes = notes
-
-            if (!query.isNullOrBlank()) {
-                val lowerCaseQuery = query.lowercase()
-                filteredNotes = filteredNotes?.filter { note ->
+            if (!newQuery.isNullOrBlank()) {
+                val lowerCaseQuery = newQuery.lowercase()
+                filteredNotes = filteredNotes.filter { note ->
                     note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
                         .contains(lowerCaseQuery)
                 }
             }
             if (filteredNotes.isEmpty()) isDataEmpty = true
-            _notes.value = mapNotesToNoteItems(filteredNotes)
+            _notes.value = filteredNotes
         }
     }
 
-    private fun mapNotesToNoteItems(notes: List<Note>): List<NoteItem> {
-        return notes.map { note -> NoteItem(note.id, note.title, note.description) }
+    fun onSearchDataChange(query: String?) {
+        this.query.value = query
     }
 
+
     private fun insertMockData() {
-        noteDao.deleteAllNotes()
         noteDao.insertAllNotes(MockData().mockNotes)
     }
 

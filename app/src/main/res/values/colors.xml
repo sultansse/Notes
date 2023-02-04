@@ -10,4 +10,5 @@
     <color name="dark_card">#353248</color>
     <color name="light_card">#7286D3</color>
     <color name="dark_card_transparent">#33A792F9</color>
+    <color name="transparent">#00000000</color>
 </resources>
