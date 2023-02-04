@@ -5,15 +5,15 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/noteFragment"
+        android:id="@+id/editNoteFragment"
         android:name="com.software1t.notes.ui.edit_note.EditNoteFragment"
-        android:label="NoteFragment" />
+        android:label="EditNoteFragment" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.software1t.notes.ui.home.HomeFragment"
         android:label="HomeFragment">
         <action
-            android:id="@+id/action_homeFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            android:id="@+id/action_homeFragment_to_editNoteFragment"
+            app:destination="@id/editNoteFragment" />
     </fragment>
 </navigation>

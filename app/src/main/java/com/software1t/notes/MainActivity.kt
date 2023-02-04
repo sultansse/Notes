@@ -27,9 +27,10 @@ class MainActivity : AppCompatActivity() {
 
 
         fab.setOnClickListener {
-
+            val bundle = Bundle()
+            bundle.putLong("note_id", -1)
             navController.navigateUp() // to clear previous navigation history
-            navController.navigate(R.id.noteFragment)
+            navController.navigate(R.id.editNoteFragment, bundle)
 
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()

@@ -1,23 +1,29 @@
 package com.software1t.notes.ui.home.recyclerview
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.R
+import com.software1t.notes.databinding.NoteItemBinding
 
 
-class NotesAdapter :
-    ListAdapter<NoteItem, NotesAdapter.ItemViewHolder>(
-        RowItemDiffCallbackCity()
-    ) {
+class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
+    RowItemDiffCallbackCity()
+) {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: MaterialTextView = view.findViewById(R.id.title_textView)
-        val description: MaterialTextView = view.findViewById(R.id.desc_textView)
+        // idk how to use backing, because onViewRecycled() is only RecyclerviewAdapter method.
+        // this will have memory leak :(
+        private val binding = NoteItemBinding.bind(view)
+
+        val title: MaterialTextView = binding.titleTextView
+        val description: MaterialTextView = binding.descTextView
 
     }
 
@@ -33,10 +39,15 @@ class NotesAdapter :
         holder.description.text = item.description
 
         //bad because a lot of listener calls
-//        holder.itemView.setOnClickListener() {
-//            Navigation.findNavController(holder.itemView)
-//                .navigate(R.id.action_containerFragment_to_noteFragment)
-//        }
+        holder.itemView.setOnClickListener {
+            //todo when fragment opened - take data from database and put to editText's
+            val bundle = Bundle()
+            bundle.putLong("note_id", getItem(position).id)
+            Navigation.findNavController(holder.itemView)
+                .navigate(R.id.action_homeFragment_to_editNoteFragment, bundle)
+        }
+
+
     }
 
 }

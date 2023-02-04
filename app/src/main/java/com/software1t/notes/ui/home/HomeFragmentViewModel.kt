@@ -40,13 +40,13 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
+    private fun mapNotesToNoteItems(notes: List<Note>): List<NoteItem> {
+        return notes.map { note -> NoteItem(note.id, note.title, note.description) }
+    }
+
     private fun insertMockData() {
         noteDao.deleteAllNotes()
         noteDao.insertAllNotes(MockData().mockNotes)
-    }
-
-    private fun mapNotesToNoteItems(notes: List<Note>): List<NoteItem> {
-        return notes.map { note -> NoteItem(note.title, note.description) }
     }
 
 }
