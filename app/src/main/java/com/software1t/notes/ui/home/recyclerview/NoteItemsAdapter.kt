@@ -40,7 +40,6 @@ class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
 
         //bad because a lot of listener calls
         holder.itemView.setOnClickListener {
-            //todo when fragment opened - take data from database and put to editText's
             val bundle = Bundle()
             bundle.putLong("note_id", getItem(position).id)
             Navigation.findNavController(holder.itemView)

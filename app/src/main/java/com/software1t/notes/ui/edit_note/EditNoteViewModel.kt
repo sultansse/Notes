@@ -14,43 +14,13 @@ class EditNoteViewModel(application: Application) : AndroidViewModel(application
         return noteDao.getNote(noteId)
     }
 
-    fun submitToDatabase(title: String, desc: String) {
+    fun insertNote(title: String, desc: String) {
         noteDao.insertNote(Note(title = title, description = desc))
     }
 
-    /*   private var _title: MutableLiveData<String> = MutableLiveData<String>()
-       val title: LiveData<String> get() = _title
-
-       private var _desc: MutableLiveData<String> = MutableLiveData<String>()
-       val desc: LiveData<String> get() = _desc
-
-       fun observeNotes(lifecycleOwner: LifecycleOwner, id: Long) {
-           noteDao.getAllNotes().observe(lifecycleOwner, Observer {
-               Log.d(
-                   "TAG",
-                   "BEFORE EditNoteViewModel:noteDao.getNote(id).value?.title = ${noteDao.getNote(id).value?.title} "
-               )
-               _title.value = noteDao.getNote(id).value?.title
-               _desc.value = noteDao.getNote(id).value?.description
-               Log.d(
-                   "TAG",
-                   "AFTER EditNoteViewModel:noteDao.getNote(id).value?.title = ${_title.value} "
-               )
-
-           })
-       }
-
-
-       fun getNote(id: Long) {
-           Log.d(
-               "TAG",
-               "BEFORE EditNoteViewModel:noteDao.getNote(id).value?.title = ${noteDao.getNote(id).value?.title} "
-           )
-           _title.value = noteDao.getNote(id).value?.title
-           _desc.value = noteDao.getNote(id).value?.description
-           Log.d("TAG", "AFTER EditNoteViewModel:noteDao.getNote(id).value?.title = ${_title.value} ")
-
-       }*/
+    fun updateNote(id: Long, title: String, desc: String) {
+        noteDao.updateNote(Note(id = id, title = title, description = desc))
+    }
 
 
 }

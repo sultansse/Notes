@@ -32,8 +32,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigateUp() // to clear previous navigation history
             navController.navigate(R.id.editNoteFragment, bundle)
 
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
         }
     }
 

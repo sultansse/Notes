@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.software1t.notes.MainActivity
 import com.software1t.notes.databinding.FragmentEditNoteBinding
 
@@ -20,10 +21,11 @@ class EditNoteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var noteId: Long = -1
+    private lateinit var title: TextInputEditText
+    private lateinit var desc: TextInputEditText
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
@@ -33,11 +35,14 @@ class EditNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        title = binding.titleEditText
+        desc = binding.descEditText
+
         noteId = requireArguments().getLong("note_id")
         if (noteId != -1L) {
             viewModel.getNote(noteId).observe(viewLifecycleOwner) {
-                binding.titleEditText.setText(it.title)
-                binding.descEditText.setText(it.description)
+                title.setText(it.title)
+                desc.setText(it.description)
             }
         }
 
@@ -50,12 +55,21 @@ class EditNoteFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        // todo is viewModel.insertNote() good practice for mvvm?
         binding.submit.setOnClickListener {
             Toast.makeText(requireContext(), "added successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.submitToDatabase(
-                binding.titleEditText.text.toString(),
-                binding.descEditText.text.toString()
-            )
+            if (noteId == -1L) {
+                viewModel.insertNote(
+                    title.text.toString(),
+                    desc.text.toString(),
+                )
+            } else {
+                viewModel.updateNote(
+                    noteId,
+                    title.text.toString(),
+                    desc.text.toString(),
+                )
+            }
         }
     }
 
