@@ -22,7 +22,8 @@ class EditNoteFragment : Fragment() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return EditNoteViewModel(
-                    application = requireActivity().application, noteId = noteId
+                    application = requireActivity().application,
+                    noteId = noteId
                 ) as T
             }
         }
@@ -31,7 +32,7 @@ class EditNoteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var noteId: Long = -1
-    private var isNewNote: Boolean = true
+    private var isNewNote: Boolean = false
     private lateinit var title: TextInputEditText
     private lateinit var desc: TextInputEditText
 
@@ -58,56 +59,20 @@ class EditNoteFragment : Fragment() {
         title = binding.titleEditText
         desc = binding.descEditText
         noteId = requireArguments().getLong("note_id")
+        if (noteId == -1L) isNewNote = true
 
         setTopToolbar()
-        setEditTexts()
+        updateNote()
 
-
-        /*        binding.titleEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Save changes to the database
-                viewModel.onSubmit(title.text.toString(), desc.text.toString(),)
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No need to do anything here
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // No need to do anything here
-            }
-        })
-
-        binding.descEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Save changes to the database
-                viewModel.onSubmit(
-                    title.text.toString(),
-                    desc.text.toString(),
-                )
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No need to do anything here
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // No need to do anything here
-            }
-        })*/
-
-
-//        // todo is viewModel.insertNote() good practice for mvvm?
+        // todo is viewModel.insertNote() good practice for mvvm?
         binding.submit.setOnClickListener {
             Toast.makeText(requireContext(), "added successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.onSubmit(
+            viewModel.onClickSubmit(
                 title.text.toString(),
                 desc.text.toString(),
             )
         }
-
     }
-
 
     private fun setTopToolbar() {
         val topToolbar = binding.topToolbar
@@ -119,11 +84,15 @@ class EditNoteFragment : Fragment() {
         }
     }
 
-
-    private fun setEditTexts() {
+    private fun updateNote() {
         viewModel.note.observe(viewLifecycleOwner) {
-            title.setText(it.title)
-            desc.setText(it.description)
+            if (isNewNote) {
+                title.setText("")
+                desc.setText("")
+            } else {
+                title.setText(it.title)
+                desc.setText(it.description)
+            }
         }
     }
 

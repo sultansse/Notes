@@ -11,8 +11,9 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     var isDataEmpty: Boolean = false
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
-    private var _notes = MediatorLiveData<List<Note>>()
+    private val query = MutableLiveData<String>()
     private val allNotes = noteDao.getAllNotes()
+    private var _notes = MediatorLiveData<List<Note>>()
     val notes: LiveData<List<NoteItem>>
         get() = _notes.map {
             it.map { note ->
@@ -23,7 +24,6 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
                 )
             }
         }
-    private val query = MutableLiveData<String>()
 
     init {
         insertMockData()
@@ -51,6 +51,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
 
     private fun insertMockData() {
+        noteDao.deleteAllNotes()
         noteDao.insertAllNotes(MockData().mockNotes)
     }
 
