@@ -22,8 +22,7 @@ class EditNoteFragment : Fragment() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return EditNoteViewModel(
-                    application = requireActivity().application,
-                    noteId = noteId
+                    application = requireActivity().application, noteId = noteId
                 ) as T
             }
         }
@@ -32,7 +31,7 @@ class EditNoteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var noteId: Long = -1
-    private var isNewNote: Boolean = false
+    private var isNewNote = false
     private lateinit var title: TextInputEditText
     private lateinit var desc: TextInputEditText
 
@@ -40,6 +39,7 @@ class EditNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
+
         val menuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -50,6 +50,7 @@ class EditNoteFragment : Fragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         return binding.root
     }
 
@@ -58,42 +59,11 @@ class EditNoteFragment : Fragment() {
 
         title = binding.titleEditText
         desc = binding.descEditText
-        noteId = requireArguments().getLong("note_id")
-        if (noteId == -1L) isNewNote = true
 
+        getNoteId()
         setTopToolbar()
-        updateNote()
-
-        // todo is viewModel.insertNote() good practice for mvvm?
-        binding.submit.setOnClickListener {
-            Toast.makeText(requireContext(), "added successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.onClickSubmit(
-                title.text.toString(),
-                desc.text.toString(),
-            )
-        }
-    }
-
-    private fun setTopToolbar() {
-        val topToolbar = binding.topToolbar
-        (activity as AppCompatActivity).setSupportActionBar(topToolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        topToolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
-
-    private fun updateNote() {
-        viewModel.note.observe(viewLifecycleOwner) {
-            if (isNewNote) {
-                title.setText("")
-                desc.setText("")
-            } else {
-                title.setText(it.title)
-                desc.setText(it.description)
-            }
-        }
+        setObservers()
+        setSubmitButton()
     }
 
     override fun onStart() {
@@ -106,5 +76,37 @@ class EditNoteFragment : Fragment() {
         (activity as MainActivity).fab.visibility = View.VISIBLE
     }
 
+    private fun setTopToolbar() {
+        val topToolbar = binding.topToolbar
+        (activity as AppCompatActivity).setSupportActionBar(topToolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        topToolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun getNoteId() {
+        noteId = requireArguments().getLong("note_id")
+        if (noteId == -1L) isNewNote = true
+    }
+
+    private fun setObservers() {
+        viewModel.currentNote.observe(viewLifecycleOwner) {
+            if (!isNewNote) {
+                title.setText(it.title)
+                desc.setText(it.description)
+            }
+        }
+    }
+
+    private fun setSubmitButton() {
+        binding.submit.setOnClickListener {
+            Toast.makeText(requireContext(), "added successfully!", Toast.LENGTH_SHORT).show()
+            viewModel.onClickSubmit(
+                title.text.toString(),
+                desc.text.toString(),
+            )
+        }
+    }
 }

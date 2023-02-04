@@ -26,7 +26,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
 
     init {
-        insertMockData()
+//        insertMockData()
         _notes.addSource(allNotes) { noteList ->
             _notes.value = noteList
         }

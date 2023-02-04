@@ -11,10 +11,15 @@ class EditNoteViewModel(
 ) : AndroidViewModel(application) {
 
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
-    val note = noteDao.getNote(noteId)
+    val currentNote = noteDao.getNote(noteId)
+    private var isNewNote = false
+
+    init {
+        if (noteId == -1L) isNewNote = true
+    }
 
     fun onClickSubmit(title: String, desc: String) {
-        if (noteId == -1L) {
+        if (isNewNote) {
             noteDao.insertNote(Note(title = title, description = desc))
         } else {
             noteDao.updateNote(Note(id = noteId, title = title, description = desc))
