@@ -1,5 +1,6 @@
 package com.software1t.notes.ui.edit_note
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -13,7 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.software1t.notes.MainActivity
+import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentEditNoteBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EditNoteFragment : Fragment() {
@@ -32,8 +36,12 @@ class EditNoteFragment : Fragment() {
 
     private var noteId: Long = -1
     private var isNewNote = false
-    private lateinit var title: TextInputEditText
-    private lateinit var desc: TextInputEditText
+
+    private var _title: TextInputEditText? = null
+    private var _desc: TextInputEditText? = null
+    private val title get() = _title!!
+    private val desc get() = _desc!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,10 +51,22 @@ class EditNoteFragment : Fragment() {
         val menuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-
+                menuInflater.inflate(R.menu.bottom_toolbar, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.add -> {
+                        // handle first action
+                        Toast.makeText(requireContext(), "First clicked", Toast.LENGTH_SHORT).show()
+                    }
+                    R.id.color -> {
+                        // handle second action
+                    }
+                    R.id.more -> {
+                        // handle third action
+                    }
+                }
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
@@ -57,13 +77,21 @@ class EditNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        title = binding.titleEditText
-        desc = binding.descEditText
+        _title = binding.titleEditText
+        _desc = binding.descEditText
+        val date = Date(Calendar.getInstance().timeInMillis)
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault())
+        val formattedDate = dateFormat.format(date)
+//        binding.dateTextView.text = "last changes: $formattedDate"
 
         getNoteId()
         setTopToolbar()
         setObservers()
         setSubmitButton()
+        setPinButton()
+        setCopyButton()
+        setDeleteButton()
+
     }
 
     override fun onStart() {
@@ -74,6 +102,13 @@ class EditNoteFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         (activity as MainActivity).fab.visibility = View.VISIBLE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+        _title = null
+        _desc = null
     }
 
     private fun setTopToolbar() {
@@ -102,11 +137,64 @@ class EditNoteFragment : Fragment() {
 
     private fun setSubmitButton() {
         binding.submit.setOnClickListener {
-            Toast.makeText(requireContext(), "added successfully!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Added successfully!", Toast.LENGTH_SHORT).show()
             viewModel.onClickSubmit(
                 title.text.toString(),
                 desc.text.toString(),
+//                System.currentTimeMillis()
             )
+        }
+    }
+
+    private fun setDeleteButton() {
+        binding.deleteButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
+            viewModel.deleteNote(
+//                title.text.toString(),
+//                desc.text.toString(),
+//                System.currentTimeMillis()
+            )
+        }
+    }
+
+    private fun setCopyButton() {
+        binding.copyButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
+//            HomeFragment().recyclerView.smoothScrollToPosition()
+            viewModel.copyNote(
+//                title.text.toString(),
+//                desc.text.toString(),
+//                System.currentTimeMillis()
+            )
+        }
+    }
+
+    private fun setPinButton() {
+        binding.pinButton.setOnClickListener {
+            Toast.makeText(requireContext(), "Pinned unsuccessfully!", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
+//            viewModel.pinNote(
+//                title.text.toString(),
+//                desc.text.toString(),
+//                System.currentTimeMillis()
+//            )
+        }
+    }
+
+    private fun setAddButton() {
+        binding.addButton.setOnClickListener {
+            Toast.makeText(requireContext(), "add feature successfully!", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    private fun setColorButton() {
+        binding.colorButton.setOnClickListener {
+            Toast.makeText(requireContext(), "color changed successfully!", Toast.LENGTH_SHORT)
+                .show()
+            binding.textArea.setBackgroundColor(Color.MAGENTA)
         }
     }
 }

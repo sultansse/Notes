@@ -24,24 +24,3 @@ abstract class NoteDatabase : RoomDatabase() {
     }
 
 }
-
-//        fun getInstance(context: Context): NoteDatabase {
-//            return instance ?: synchronized(this) {
-//                instance ?: buildDatabase(context).also { instance = it }
-//            }
-//        }
-//
-//        private fun buildDatabase(context: Context): NoteDatabase {
-//            return Room.databaseBuilder(context, NoteDatabase::class.java, "notes.db")
-//                .addCallback(object : Callback() {
-//                    override fun onCreate(db: SupportSQLiteDatabase) {
-//                        super.onCreate(db)
-//                        db.execSQL("INSERT INTO notes (title, description) VALUES ('Note 1', 'Description 1')")
-//                        db.execSQL("INSERT INTO notes (title, description) VALUES ('Note 2', 'Description 2')")
-//
-//                        // Add more insert statements for more data
-//                    }
-//                })
-//                .build()
-//        }
-//    }

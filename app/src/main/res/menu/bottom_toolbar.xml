@@ -52,8 +52,8 @@
         </menu>
     </item>
     <item
-        android:id="@+id/date"
-        android:title="@string/date" />
+        android:id="@+id/dateTextView"
+        android:title="@string/mock_date" />
     <item
         android:id="@+id/more"
         android:icon="@drawable/ic_outline_more_vert_24"
