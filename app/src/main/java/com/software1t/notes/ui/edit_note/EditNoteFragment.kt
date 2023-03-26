@@ -87,7 +87,7 @@ class EditNoteFragment : Fragment() {
         getNoteId()
         setTopToolbar()
         setObservers()
-        setSubmitButton()
+        setSaveButton()
         setPinButton()
         setCopyButton()
         setDeleteButton()
@@ -135,10 +135,10 @@ class EditNoteFragment : Fragment() {
         }
     }
 
-    private fun setSubmitButton() {
-        binding.submit.setOnClickListener {
+    private fun setSaveButton() {
+        binding.save.setOnClickListener {
             Toast.makeText(requireContext(), "Added successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.onClickSubmit(
+            viewModel.onClickSave(
                 title.text.toString(),
                 desc.text.toString(),
 //                System.currentTimeMillis()
@@ -172,15 +172,15 @@ class EditNoteFragment : Fragment() {
     }
 
     private fun setPinButton() {
-        binding.pinButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Pinned unsuccessfully!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
-//            viewModel.pinNote(
-//                title.text.toString(),
-//                desc.text.toString(),
-//                System.currentTimeMillis()
-//            )
-        }
+//        binding.pinButton.setOnClickListener {
+//            Toast.makeText(requireContext(), "Pinned unsuccessfully!", Toast.LENGTH_SHORT).show()
+//            findNavController().popBackStack()
+////            viewModel.pinNote(
+////                title.text.toString(),
+////                desc.text.toString(),
+////                System.currentTimeMillis()
+////            )
+//        }
     }
 
     private fun setAddButton() {

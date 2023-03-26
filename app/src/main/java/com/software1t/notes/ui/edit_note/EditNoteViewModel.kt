@@ -7,6 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
 import com.software1t.notes.ui.home.recyclerview.NoteItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class EditNoteViewModel(
     application: Application,
@@ -24,11 +27,13 @@ class EditNoteViewModel(
         if (noteId == -1L) isNewNote = true
     }
 
-    fun onClickSubmit(title: String, desc: String) {
-        if (isNewNote) {
-            noteDao.insertNote(Note(title = title, description = desc))
-        } else {
-            noteDao.updateNote(Note(id = noteId, title = title, description = desc))
+    fun onClickSave(title: String, desc: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (isNewNote) {
+                noteDao.insertNote(Note(title = title, description = desc))
+            } else {
+                noteDao.updateNote(Note(id = noteId, title = title, description = desc))
+            }
         }
     }
 
