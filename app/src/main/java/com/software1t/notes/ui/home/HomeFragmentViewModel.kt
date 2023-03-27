@@ -9,6 +9,8 @@ import com.software1t.notes.R
 import com.software1t.notes.data.MockData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
+import com.software1t.notes.ui.home.adapterPattern.NoteItemBlock
+import com.software1t.notes.ui.home.adapterPattern.NoteItemImpl
 import com.software1t.notes.ui.home.recyclerview.NoteItem
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
@@ -39,17 +41,28 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     private val query = MutableLiveData<String>()
     private val allNotes = noteDao.getAllNotes()
     val isDataEmpty = MutableLiveData(false)
+
+    private val noteAdapter: NoteItemBlock = NoteItemImpl()
     private var _notes = MediatorLiveData<List<Note>>()
+    val notes: LiveData<List<NoteItem>>
+        get() = _notes.map {
+            it.map { note ->
+                noteAdapter.adapt(note)
+            }
+        }
+
+/*    private var _notes = MediatorLiveData<List<Note>>()
     val notes: LiveData<List<NoteItem>>
         get() = _notes.map {
             it.map { note ->
                 NoteItem(
                     note.id,
                     note.title,
-                    note.description,/*note.lastModified*/
+                    note.description,*//*note.lastModified*//*
                 )
             }
-        }
+        }*/
+
 
     init {
 //        deleteAllMockData()
