@@ -5,69 +5,59 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
-import com.software1t.notes.data.MockData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
 import com.software1t.notes.ui.home.recyclerview.NoteItem
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val noteDao = NoteDatabase.getInstance(application).noteDao()
+    private val allNotes = noteDao.getAllNotes()
 
     var isGrid = MutableLiveData(false)
-
-    private val noteDao = NoteDatabase.getInstance(application).noteDao()
     private val query = MutableLiveData<String>()
-    private val allNotes = noteDao.getAllNotes()
     val isDataEmpty = MutableLiveData(false)
 
-    private var _notes = MediatorLiveData<List<Note>>()
-    val notes: LiveData<List<NoteItem>>
-        get() = _notes.map {
-            it.map { note ->
-                NoteItem(
-                    note.id,
-                    note.title,
-                    note.description
-                )
-            }
-        }
+    private val _notes = MediatorLiveData<List<NoteItem>>()
+    val notes: LiveData<List<NoteItem>> = _notes
 
     init {
-//        deleteAllMockData()
-//        insertMockData()
         updateFilteredNotes()
     }
 
-    fun onSearchDataChange(query: String?) {
+    fun onSearchQueryChanged(query: String?) {
         this.query.value = query
     }
 
     private fun updateFilteredNotes() {
         _notes.addSource(allNotes) { noteList ->
-            _notes.value = noteList
+            val filteredNotes = filterNotes(noteList)
+            isDataEmpty.value = filteredNotes.isEmpty()
+            _notes.value = filteredNotes
         }
         _notes.addSource(query) { newQuery ->
-            var filteredNotes = allNotes.value ?: return@addSource
-
-            if (!newQuery.isNullOrBlank()) {
-                val lowerCaseQuery = newQuery.lowercase()
-                filteredNotes = filteredNotes.filter { note ->
-                    note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
-                        .contains(lowerCaseQuery)
-                }
-            }
+            val noteList = allNotes.value ?: emptyList()
+            val filteredNotes = filterNotes(noteList)
             isDataEmpty.value = filteredNotes.isEmpty()
             _notes.value = filteredNotes
         }
     }
 
-    private fun insertMockData() {
-        noteDao.insertAllNotes(MockData().mockNotes)
-    }
-
-    private fun deleteAllMockData() {
-        noteDao.deleteAllNotes()
+    private fun filterNotes(noteList: List<Note>): List<NoteItem> {
+        val currentQuery = query.value?.lowercase()
+        return if (currentQuery.isNullOrBlank()) {
+            noteList.map { note ->
+                NoteItem(note.id, note.title, note.description)
+            }
+        } else {
+            val lowerCaseQuery = currentQuery.lowercase()
+            noteList.filter { note ->
+                note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
+                    .contains(lowerCaseQuery)
+            }.map { note ->
+                NoteItem(note.id, note.title, note.description)
+            }
+        }
     }
 
     fun onLayoutManagerIconClick() {

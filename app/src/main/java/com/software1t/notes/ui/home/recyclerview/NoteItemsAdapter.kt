@@ -26,8 +26,8 @@ class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val adapterLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
+        val adapterLayout = LayoutInflater.from(parent.context)
+            .inflate(R.layout.note_item, parent, false)
         return ItemViewHolder(adapterLayout)
     }
 
@@ -37,8 +37,10 @@ class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
         holder.description.text = item.description
 
         holder.itemView.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putLong("note_id", getItem(position).id)
+            val itemId = getItem(holder.adapterPosition).id
+            val bundle = Bundle().apply {
+                putLong("note_id", itemId)
+            }
             Navigation.findNavController(holder.itemView)
                 .navigate(R.id.action_homeFragment_to_editNoteFragment, bundle)
         }
@@ -55,3 +57,4 @@ class RowItemDiffCallbackCity : DiffUtil.ItemCallback<NoteItem>() {
         return oldItem.id == newItem.id
     }
 }
+

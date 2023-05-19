@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -42,36 +41,33 @@ class HomeFragment : Fragment() {
             viewModel.onLayoutManagerIconClick()
         }
 
-        viewModel.isGrid.observe(viewLifecycleOwner) {
-            if (it) recyclerView.layoutManager = GridLayoutManager(context, 2)
-            else recyclerView.layoutManager = LinearLayoutManager(context)
+        viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
+            recyclerView.layoutManager = if (isGrid) {
+                GridLayoutManager(context, 2)
+            } else {
+                LinearLayoutManager(context)
+            }
         }
 
-        viewModel.notes.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+        viewModel.notes.observe(viewLifecycleOwner) { noteItems ->
+            adapter.submitList(noteItems)
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.onSearchDataChange(newText)
+                viewModel.onSearchQueryChanged(newText)
                 return false
             }
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.isDataEmpty.observe(viewLifecycleOwner) {
-                    if (it) Toast.makeText(
-                        requireContext(), "Nothing found :( ", Toast.LENGTH_SHORT
-                    ).show()
-                }
-                viewModel.onSearchDataChange(query)
+                viewModel.onSearchQueryChanged(query)
                 return false
             }
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
         _recyclerView = null
     }
