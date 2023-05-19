@@ -27,6 +27,7 @@ class EditNoteFragment : Fragment() {
             }
         }
     })
+
     private var _binding: FragmentEditNoteBinding? = null
     private val binding get() = _binding!!
 
@@ -58,7 +59,6 @@ class EditNoteFragment : Fragment() {
         setSaveButton()
         setCopyButton()
         setDeleteButton()
-
     }
 
     override fun onStart() {
@@ -116,11 +116,7 @@ class EditNoteFragment : Fragment() {
         binding.deleteButton.setOnClickListener {
             Toast.makeText(requireContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
-            viewModel.deleteNote(
-//                title.text.toString(),
-//                desc.text.toString(),
-//                System.currentTimeMillis()
-            )
+            viewModel.deleteNote()
         }
     }
 
@@ -128,12 +124,7 @@ class EditNoteFragment : Fragment() {
         binding.copyButton.setOnClickListener {
             Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
-//            HomeFragment().recyclerView.smoothScrollToPosition()
-            viewModel.copyNote(
-//                title.text.toString(),
-//                desc.text.toString(),
-//                System.currentTimeMillis()
-            )
+            viewModel.copyNote()
         }
     }
 

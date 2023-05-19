@@ -49,8 +49,4 @@ class EditNoteViewModel(
             )
         )
     }
-
-    fun pinNote(title: String, desc: String, lastModified: Long) {
-        // todo
-    }
 }
