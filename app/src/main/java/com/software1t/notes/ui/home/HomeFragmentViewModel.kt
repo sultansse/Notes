@@ -1,6 +1,7 @@
 package com.software1t.notes.ui.home
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -14,7 +15,14 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
     private val allNotes = noteDao.getAllNotes()
 
-    var isGrid = MutableLiveData(false)
+    private val sharedPreferences =
+        application.getSharedPreferences("HomeFragmentPrefs", Context.MODE_PRIVATE)
+    private val layoutManagerKey = "layoutManager"
+    private var savedLayoutManager: String? = null
+
+    private val _isGrid = MutableLiveData(false)
+    val isGrid: LiveData<Boolean> = _isGrid
+
     private val query = MutableLiveData<String>()
     val isDataEmpty = MutableLiveData(false)
 
@@ -22,6 +30,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     val notes: LiveData<List<NoteItem>> = _notes
 
     init {
+        restoreLayoutManagerState()
         updateFilteredNotes()
     }
 
@@ -61,6 +70,21 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun onLayoutManagerIconClick() {
-        isGrid.value = !(isGrid.value ?: true)
+        _isGrid.value = !_isGrid.value!!
+
+        // Save the layout manager state
+        val layoutManagerValue = if (_isGrid.value == true) {
+            "grid"
+        } else {
+            "linear"
+        }
+        sharedPreferences.edit().putString(layoutManagerKey, layoutManagerValue).apply()
+    }
+
+    private fun restoreLayoutManagerState() {
+        savedLayoutManager = sharedPreferences.getString(layoutManagerKey, null)
+        savedLayoutManager?.let { layoutManagerValue ->
+            _isGrid.value = layoutManagerValue == "grid"
+        }
     }
 }
