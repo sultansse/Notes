@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.databinding.FragmentHomeBinding
@@ -36,7 +37,15 @@ class HomeFragment : Fragment() {
 
         val adapter = NoteItemsAdapter()
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+
+        binding.layoutManagerIconImageView.setOnClickListener {
+            viewModel.onLayoutManagerIconClick()
+        }
+
+        viewModel.isGrid.observe(viewLifecycleOwner) {
+            if (it) recyclerView.layoutManager = GridLayoutManager(context, 2)
+            else recyclerView.layoutManager = LinearLayoutManager(context)
+        }
 
         viewModel.notes.observe(viewLifecycleOwner) {
             adapter.submitList(it)

@@ -6,46 +6,32 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.data.MockData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
-import com.software1t.notes.ui.home.adapterPattern.NoteItemBlock
-import com.software1t.notes.ui.home.adapterPattern.NoteItemImpl
 import com.software1t.notes.ui.home.recyclerview.NoteItem
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    var isLinear = MutableLiveData(true)
-    private var _layoutManager = MutableLiveData<RecyclerView.LayoutManager>()
+    var isGrid = MutableLiveData(false)
 
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
     private val query = MutableLiveData<String>()
     private val allNotes = noteDao.getAllNotes()
     val isDataEmpty = MutableLiveData(false)
 
-    private val noteAdapter: NoteItemBlock = NoteItemImpl()
     private var _notes = MediatorLiveData<List<Note>>()
     val notes: LiveData<List<NoteItem>>
         get() = _notes.map {
             it.map { note ->
-                noteAdapter.adapt(note)
+                NoteItem(
+                    note.id,
+                    note.title,
+                    note.description
+                )
             }
         }
-
-
-//    fun onLayoutManagerChange() {
-//        if (isLinear.value == true) {
-//            _layoutManager.value = GridLayoutManager(getApplication(), 2)
-//            _layoutManagerIcon.value = R.drawable.ic_outline_linear_view_24
-//            isLinear.value = false
-//        } else {
-//            _layoutManager.value = LinearLayoutManager(getApplication())
-//            _layoutManagerIcon.value = R.drawable.ic_baseline_grid_view_24
-//            isLinear.value = true
-//        }
-//    }
 
     init {
 //        deleteAllMockData()
@@ -82,5 +68,9 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private fun deleteAllMockData() {
         noteDao.deleteAllNotes()
+    }
+
+    fun onLayoutManagerIconClick() {
+        isGrid.value = !(isGrid.value ?: true)
     }
 }
