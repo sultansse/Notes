@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.software1t.notes.data.MockData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
 import com.software1t.notes.ui.home.recyclerview.NoteItem
@@ -30,6 +31,9 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     val notes: LiveData<List<NoteItem>> = _notes
 
     init {
+//        deleteAllMockData()
+//        insertMockData()
+
         restoreLayoutManagerState()
         updateFilteredNotes()
     }
@@ -86,5 +90,13 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         savedLayoutManager?.let { layoutManagerValue ->
             _isGrid.value = layoutManagerValue == "grid"
         }
+    }
+
+    private fun insertMockData() {
+        noteDao.insertAllNotes(MockData().mockNotes)
+    }
+
+    private fun deleteAllMockData() {
+        noteDao.deleteAllNotes()
     }
 }
