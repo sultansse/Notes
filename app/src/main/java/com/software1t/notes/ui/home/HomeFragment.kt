@@ -5,11 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
+import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentHomeBinding
 import com.software1t.notes.ui.home.recyclerview.NoteItemsAdapter
 
@@ -42,17 +46,17 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
-            recyclerView.layoutManager = if (isGrid) {
+            val layoutManager = if (isGrid) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context)
             }
+            recyclerView.layoutManager = layoutManager
         }
 
-        viewModel.notes.observe(viewLifecycleOwner) { noteItems ->
-            adapter.submitList(noteItems)
+        viewModel.notes.observe(viewLifecycleOwner) { notes ->
+            adapter.submitList(notes)
         }
-
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 viewModel.onSearchQueryChanged(newText)
@@ -64,6 +68,39 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+        // Setup navigation drawer
+        val drawerLayout = requireActivity().findViewById<DrawerLayout>(R.id.drawerLayout)
+        val navView = requireActivity().findViewById<NavigationView>(R.id.navView)
+
+        binding.menuImageView.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.notifications -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+
+                R.id.settings -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+
+                R.id.questions -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+
+                R.id.rate -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                // Add more navigation item cases as needed
+                else -> false
+            }
+        }
     }
 
     override fun onDestroyView() {
