@@ -8,7 +8,7 @@ class NoteItemImpl : NoteItemBlock {
         return NoteItem(
             note.id,
             note.title,
-            note.description,/*note.lastModified*/
+            note.description
         )
     }
 }

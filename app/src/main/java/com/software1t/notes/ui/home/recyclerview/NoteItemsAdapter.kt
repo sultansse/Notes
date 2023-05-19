@@ -18,8 +18,6 @@ class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
 ) {
 
     class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        // idk how to use backing, because onViewRecycled() is only RecyclerviewAdapter method.
-        // this will have memory leak :(
         private val binding = NoteItemBinding.bind(view)
 
         val title: MaterialTextView = binding.titleTextView
@@ -38,17 +36,13 @@ class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(
         holder.title.text = item.title
         holder.description.text = item.description
 
-        //bad because a lot of listener calls
         holder.itemView.setOnClickListener {
             val bundle = Bundle()
             bundle.putLong("note_id", getItem(position).id)
             Navigation.findNavController(holder.itemView)
                 .navigate(R.id.action_homeFragment_to_editNoteFragment, bundle)
         }
-
-
     }
-
 }
 
 class RowItemDiffCallbackCity : DiffUtil.ItemCallback<NoteItem>() {
@@ -60,5 +54,4 @@ class RowItemDiffCallbackCity : DiffUtil.ItemCallback<NoteItem>() {
     override fun areItemsTheSame(oldItem: NoteItem, newItem: NoteItem): Boolean {
         return oldItem.id == newItem.id
     }
-
 }

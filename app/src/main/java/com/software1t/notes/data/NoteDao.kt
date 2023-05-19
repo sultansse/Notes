@@ -25,8 +25,4 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes WHERE id = :noteId")
     fun getNote(noteId: Long): LiveData<Note>
-//
-//    @Query("SELECT * FROM notes ORDER BY lastModified DESC")
-//    fun getAllNotesOrderByLastModified(): LiveData<List<Note>>
-
 }

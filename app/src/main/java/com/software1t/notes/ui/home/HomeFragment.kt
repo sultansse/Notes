@@ -23,8 +23,6 @@ class HomeFragment : Fragment() {
     private var _recyclerView: RecyclerView? = null
     private val recyclerView get() = _recyclerView!!
 
-    private var isLayoutManagerChanged = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -39,46 +37,6 @@ class HomeFragment : Fragment() {
         val adapter = NoteItemsAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-
-
-        viewModel.isLinear.observe(viewLifecycleOwner) {
-            isLayoutManagerChanged = it
-        }
-//            // todo bugs:
-//            // захожу в notefragment и выхожу он говорит что layoutmanager is already attached.
-//            // потому после того как экран поменяется через notefragment - он попытается по новой положить layoutmanager в recyclerview
-//            //
-//            //удаляю предпоследний элемент  после захожу уже в след элемент - кидает indexoutofbound
-
-        viewModel.layoutManager.observe(viewLifecycleOwner) {
-            if (isLayoutManagerChanged) {
-                recyclerView.layoutManager = it
-            }
-        }
-
-        viewModel.layoutManagerIcon.observe(viewLifecycleOwner) {
-            binding.layoutManagerIconImageView.setImageResource(it)
-        }
-//
-        binding.layoutManagerIconImageView.setOnClickListener {
-            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
-
-            viewModel.onLayoutManagerChange()
-        }
-
-/*        var isLinear = true
-        binding.layoutManagerIconImageView.setOnClickListener {
-            if (isLinear) {
-                recyclerView.layoutManager = GridLayoutManager(context, 2)
-                binding.layoutManagerIconImageView.setImageResource(R.drawable.ic_outline_linear_view_24)
-                isLinear = false
-            } else{
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                binding.layoutManagerIconImageView.setImageResource(R.drawable.ic_baseline_grid_view_24)
-                isLinear = true
-            }
-
-        }*/
 
         viewModel.notes.observe(viewLifecycleOwner) {
             adapter.submitList(it)
@@ -108,5 +66,4 @@ class HomeFragment : Fragment() {
         _binding = null
         _recyclerView = null
     }
-
 }

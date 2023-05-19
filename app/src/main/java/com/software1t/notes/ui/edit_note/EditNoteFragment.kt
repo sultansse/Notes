@@ -1,23 +1,19 @@
 package com.software1t.notes.ui.edit_note
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.software1t.notes.MainActivity
-import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentEditNoteBinding
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class EditNoteFragment : Fragment() {
@@ -47,30 +43,6 @@ class EditNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
-
-        val menuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.bottom_toolbar, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.add -> {
-                        // handle first action
-                        Toast.makeText(requireContext(), "First clicked", Toast.LENGTH_SHORT).show()
-                    }
-                    R.id.color -> {
-                        // handle second action
-                    }
-                    R.id.more -> {
-                        // handle third action
-                    }
-                }
-                return false
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
         return binding.root
     }
 
@@ -79,16 +51,11 @@ class EditNoteFragment : Fragment() {
 
         _title = binding.titleEditText
         _desc = binding.descEditText
-        val date = Date(Calendar.getInstance().timeInMillis)
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm:ss", Locale.getDefault())
-        val formattedDate = dateFormat.format(date)
-//        binding.dateTextView.text = "last changes: $formattedDate"
 
         getNoteId()
         setTopToolbar()
         setObservers()
         setSaveButton()
-        setPinButton()
         setCopyButton()
         setDeleteButton()
 
@@ -141,7 +108,6 @@ class EditNoteFragment : Fragment() {
             viewModel.onClickSave(
                 title.text.toString(),
                 desc.text.toString(),
-//                System.currentTimeMillis()
             )
         }
     }
@@ -171,30 +137,5 @@ class EditNoteFragment : Fragment() {
         }
     }
 
-    private fun setPinButton() {
-//        binding.pinButton.setOnClickListener {
-//            Toast.makeText(requireContext(), "Pinned unsuccessfully!", Toast.LENGTH_SHORT).show()
-//            findNavController().popBackStack()
-////            viewModel.pinNote(
-////                title.text.toString(),
-////                desc.text.toString(),
-////                System.currentTimeMillis()
-////            )
-//        }
-    }
 
-    private fun setAddButton() {
-        binding.addButton.setOnClickListener {
-            Toast.makeText(requireContext(), "add feature successfully!", Toast.LENGTH_SHORT).show()
-
-        }
-    }
-
-    private fun setColorButton() {
-        binding.colorButton.setOnClickListener {
-            Toast.makeText(requireContext(), "color changed successfully!", Toast.LENGTH_SHORT)
-                .show()
-            binding.textArea.setBackgroundColor(Color.MAGENTA)
-        }
-    }
 }
