@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.home.recyclerview
+package com.software1t.notes.ui.home.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.R
 import com.software1t.notes.databinding.NoteItemBinding
+import com.software1t.notes.ui.model.NoteItem
 
 
 class NoteItemsAdapter : ListAdapter<NoteItem, NoteItemsAdapter.ItemViewHolder>(

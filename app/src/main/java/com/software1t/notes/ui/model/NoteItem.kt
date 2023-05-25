@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.home.recyclerview
+package com.software1t.notes.ui.model
 
 data class NoteItem(
     val id: Long = 0,

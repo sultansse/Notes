@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.software1t.notes.data.MockData
 import com.software1t.notes.data.Note
 import com.software1t.notes.data.NoteDatabase
-import com.software1t.notes.ui.home.recyclerview.NoteItem
+import com.software1t.notes.ui.model.NoteItem
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
 

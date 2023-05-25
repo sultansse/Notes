@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentHomeBinding
-import com.software1t.notes.ui.home.recyclerview.NoteItemsAdapter
+import com.software1t.notes.ui.home.adapter.NoteItemsAdapter
 
 
 class HomeFragment : Fragment() {
