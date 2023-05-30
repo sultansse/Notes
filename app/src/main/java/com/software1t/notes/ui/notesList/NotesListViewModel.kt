@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.software1t.notes.data.local.MockData
 import com.software1t.notes.data.local.NoteDatabase
 import com.software1t.notes.data.local.model.NoteLocalModel
-import com.software1t.notes.ui.model.NoteItem
+import com.software1t.notes.ui.notesList.adapter.NoteItem
 
 class NotesListViewModel(application: Application) : AndroidViewModel(application) {
 

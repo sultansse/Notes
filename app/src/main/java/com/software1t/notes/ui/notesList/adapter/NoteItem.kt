@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.model
+package com.software1t.notes.ui.notesList.adapter
 
 data class NoteItem(
     val id: Long = 0,

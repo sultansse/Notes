@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,7 +39,8 @@ class NotesList : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _recyclerView = binding.recyclerView
 
-        val adapter = NoteItemsAdapter()
+        val adapter = NoteItemsAdapter(navController = findNavController(this))
+
         recyclerView.adapter = adapter
 
         binding.layoutManagerIconImageView.setOnClickListener {

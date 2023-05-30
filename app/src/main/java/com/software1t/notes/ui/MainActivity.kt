@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.software1t.notes.R
 import com.software1t.notes.databinding.ActivityMainBinding
+import com.software1t.notes.ui.notesList.NotesListDirections
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,13 +27,9 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
 
-
         fab.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putLong("note_id", -1)
-            navController.navigateUp() // to clear previous navigation history
-            navController.navigate(R.id.editNoteFragment, bundle)
-
+            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(noteId = -1)
+            navController.navigate(action)
         }
     }
 

@@ -2,18 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/noteList">
 
     <fragment
         android:id="@+id/editNoteFragment"
         android:name="com.software1t.notes.ui.editNote.EditNote"
-        android:label="EditNoteFragment" />
+        android:label="Edit note">
+        <argument
+            android:name="note_id"
+            app:argType="long" />
+    </fragment>
+
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/noteList"
         android:name="com.software1t.notes.ui.notesList.NotesList"
-        android:label="HomeFragment">
+        android:label="Home">
         <action
-            android:id="@+id/action_homeFragment_to_editNoteFragment"
+            android:id="@+id/action_noteListFragment_to_editNoteFragment"
             app:destination="@id/editNoteFragment" />
     </fragment>
 </navigation>

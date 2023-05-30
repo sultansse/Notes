@@ -89,7 +89,8 @@ class EditNote : Fragment() {
     }
 
     private fun getNoteId() {
-        noteId = requireArguments().getLong("note_id")
+        val args = EditNoteArgs.fromBundle(requireArguments())
+        noteId = args.noteId
         if (noteId == -1L) isNewNote = true
     }
 
