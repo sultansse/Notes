@@ -15,14 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.software1t.notes.R
-import com.software1t.notes.databinding.FragmentHomeBinding
+import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.ui.notesList.adapter.NoteItemsAdapter
 
 
 class NotesList : Fragment() {
 
     private val viewModel: NotesListViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
 
     private var _recyclerView: RecyclerView? = null
@@ -31,17 +31,20 @@ class NotesList : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentNoteListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _recyclerView = binding.recyclerView
-
         val adapter = NoteItemsAdapter(navController = findNavController(this))
-
         recyclerView.adapter = adapter
+
+        binding.fab.setOnClickListener {
+            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(noteId = -1)
+            findNavController(this).navigate(action)
+        }
 
         binding.layoutManagerIconImageView.setOnClickListener {
             viewModel.onLayoutManagerIconClick()

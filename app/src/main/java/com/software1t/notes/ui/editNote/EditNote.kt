@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.software1t.notes.databinding.FragmentEditNoteBinding
-import com.software1t.notes.ui.MainActivity
 
 
 class EditNote : Fragment() {
@@ -59,16 +58,6 @@ class EditNote : Fragment() {
         setSaveButton()
         setCopyButton()
         setDeleteButton()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity).fab.visibility = View.GONE
-    }
-
-    override fun onStop() {
-        super.onStop()
-        (activity as MainActivity).fab.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {
