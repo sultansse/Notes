@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.home
+package com.software1t.notes.ui.notesList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentHomeBinding
-import com.software1t.notes.ui.home.adapter.NoteItemsAdapter
+import com.software1t.notes.ui.notesList.adapter.NoteItemsAdapter
 
 
-class HomeFragment : Fragment() {
+class NotesList : Fragment() {
 
-    private val viewModel: HomeFragmentViewModel by viewModels()
+    private val viewModel: NotesListViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 

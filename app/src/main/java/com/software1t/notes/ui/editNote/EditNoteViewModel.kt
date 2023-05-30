@@ -1,11 +1,11 @@
-package com.software1t.notes.ui.edit_note
+package com.software1t.notes.ui.editNote
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.software1t.notes.data.Note
-import com.software1t.notes.data.NoteDatabase
+import com.software1t.notes.data.local.NoteDatabase
+import com.software1t.notes.data.local.model.NoteLocalModel
 import com.software1t.notes.ui.model.NoteItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,9 +30,9 @@ class EditNoteViewModel(
     fun onClickSave(title: String, desc: String) {
         CoroutineScope(Dispatchers.IO).launch {
             if (isNewNote) {
-                noteDao.insertNote(Note(title = title, description = desc))
+                noteDao.insertNote(NoteLocalModel(title = title, description = desc))
             } else {
-                noteDao.updateNote(Note(id = noteId, title = title, description = desc))
+                noteDao.updateNote(NoteLocalModel(id = noteId, title = title, description = desc))
             }
         }
     }
@@ -43,7 +43,7 @@ class EditNoteViewModel(
 
     fun copyNote() {
         noteDao.insertNote(
-            Note(
+            NoteLocalModel(
                 title = "${currentNote.value?.title} COPY",
                 description = currentNote.value?.description.toString()
             )

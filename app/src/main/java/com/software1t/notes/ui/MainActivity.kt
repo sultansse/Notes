@@ -1,10 +1,11 @@
-package com.software1t.notes
+package com.software1t.notes.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.software1t.notes.R
 import com.software1t.notes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

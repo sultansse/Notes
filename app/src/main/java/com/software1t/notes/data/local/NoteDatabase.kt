@@ -1,11 +1,13 @@
-package com.software1t.notes.data
+package com.software1t.notes.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.software1t.notes.data.local.dao.NoteDao
+import com.software1t.notes.data.local.model.NoteLocalModel
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [NoteLocalModel::class], version = 1)
 abstract class NoteDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao

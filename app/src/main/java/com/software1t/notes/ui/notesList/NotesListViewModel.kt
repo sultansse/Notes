@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.home
+package com.software1t.notes.ui.notesList
 
 import android.app.Application
 import android.content.Context
@@ -6,12 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.software1t.notes.data.MockData
-import com.software1t.notes.data.Note
-import com.software1t.notes.data.NoteDatabase
+import com.software1t.notes.data.local.MockData
+import com.software1t.notes.data.local.NoteDatabase
+import com.software1t.notes.data.local.model.NoteLocalModel
 import com.software1t.notes.ui.model.NoteItem
 
-class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {
+class NotesListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val noteDao = NoteDatabase.getInstance(application).noteDao()
     private val allNotes = noteDao.getAllNotes()
@@ -56,15 +56,15 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
         }
     }
 
-    private fun filterNotes(noteList: List<Note>): List<NoteItem> {
+    private fun filterNotes(noteLocalModelList: List<NoteLocalModel>): List<NoteItem> {
         val currentQuery = query.value?.lowercase()
         return if (currentQuery.isNullOrBlank()) {
-            noteList.map { note ->
+            noteLocalModelList.map { note ->
                 NoteItem(note.id, note.title, note.description)
             }
         } else {
             val lowerCaseQuery = currentQuery.lowercase()
-            noteList.filter { note ->
+            noteLocalModelList.filter { note ->
                 note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
                     .contains(lowerCaseQuery)
             }.map { note ->
@@ -93,7 +93,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun insertMockData() {
-        noteDao.insertAllNotes(MockData().mockNotes)
+        noteDao.insertAllNotes(MockData().mockNoteLocalModels)
     }
 
     private fun deleteAllMockData() {

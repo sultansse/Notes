@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.home.adapter
+package com.software1t.notes.ui.notesList.adapter
 
 import android.os.Bundle
 import android.view.LayoutInflater

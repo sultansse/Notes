@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@+id/editNoteFragment"
-        android:name="com.software1t.notes.ui.edit_note.EditNoteFragment"
+        android:name="com.software1t.notes.ui.editNote.EditNote"
         android:label="EditNoteFragment" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.software1t.notes.ui.home.HomeFragment"
+        android:name="com.software1t.notes.ui.notesList.NotesList"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_editNoteFragment"

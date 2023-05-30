@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.edit_note
+package com.software1t.notes.ui.editNote
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +12,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
-import com.software1t.notes.MainActivity
 import com.software1t.notes.databinding.FragmentEditNoteBinding
+import com.software1t.notes.ui.MainActivity
 
 
-class EditNoteFragment : Fragment() {
+class EditNote : Fragment() {
 
     private val viewModel: EditNoteViewModel by viewModels(factoryProducer = {
         object : ViewModelProvider.Factory {
