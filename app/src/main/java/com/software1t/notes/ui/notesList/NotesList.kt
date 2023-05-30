@@ -51,11 +51,17 @@ class NotesList : Fragment() {
         }
 
         viewModel.isGrid.observe(viewLifecycleOwner) { isGrid ->
-            val layoutManager = if (isGrid) {
+            val layoutManager: RecyclerView.LayoutManager = if (isGrid) {
                 GridLayoutManager(context, 2)
             } else {
                 LinearLayoutManager(context)
             }
+
+            binding.layoutManagerIconImageView.setImageResource(
+                if (isGrid) R.drawable.ic_outline_linear_view_24
+                else R.drawable.ic_baseline_grid_view_24
+            )
+
             recyclerView.layoutManager = layoutManager
         }
 
