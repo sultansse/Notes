@@ -20,4 +20,8 @@ class NoteItemsAdapter(
         val item = getItem(position)
         holder.bind(item)
     }
+
+    override fun submitList(list: List<NoteItem>?) {
+        super.submitList(list?.toMutableList()?.reversed())
+    }
 }
