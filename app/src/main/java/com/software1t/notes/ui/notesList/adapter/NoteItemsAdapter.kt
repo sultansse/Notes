@@ -21,7 +21,17 @@ class NoteItemsAdapter(
         holder.bind(item)
     }
 
-    override fun submitList(list: List<NoteItem>?) {
-        super.submitList(list?.toMutableList()?.reversed())
+    fun removeItem(position: Int) {
+        val items = currentList.toMutableList()
+        items.removeAt(position)
+        submitList(items)
+    }
+
+    fun archiveItem(position: Int) {
+        val items = currentList.toMutableList()
+        val archivedItem = items.removeAt(position)
+        // Perform archive action on the item
+        // ...
+        submitList(items)
     }
 }

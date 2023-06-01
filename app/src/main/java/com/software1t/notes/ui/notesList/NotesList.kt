@@ -1,21 +1,25 @@
 package com.software1t.notes.ui.notesList
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.ui.notesList.adapter.NoteItemsAdapter
 import com.software1t.notes.ui.notesList.logic.LayoutManagerSwitch
 import com.software1t.notes.ui.notesList.logic.NavigationDrawerHelper
 
-
+@RequiresApi(Build.VERSION_CODES.M)
 class NotesList : Fragment() {
     private val viewModel: NotesListViewModel by viewModels()
     private lateinit var binding: FragmentNoteListBinding
@@ -33,10 +37,9 @@ class NotesList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = binding.recyclerView
-        adapter = NoteItemsAdapter(navController = findNavController())
 
         setupRecyclerView()
+        setupRecyclerViewGestures()
 
         layoutManagerSwitch = LayoutManagerSwitch(binding, recyclerView, viewModel)
 
@@ -66,7 +69,38 @@ class NotesList : Fragment() {
     }
 
     private fun setupRecyclerView() {
+        recyclerView = binding.recyclerView
+        adapter = NoteItemsAdapter(navController = findNavController())
         recyclerView.adapter = adapter
+    }
+
+    private fun setupRecyclerViewGestures() {
+        val itemTouchHelper = ItemTouchHelper(object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                // No implementation needed for swipe
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition
+
+                if (direction == ItemTouchHelper.LEFT) {
+                    // Perform delete action
+                    Toast.makeText(requireContext(), "Deleted item ", Toast.LENGTH_SHORT).show()
+                    adapter.removeItem(position)
+                } else if (direction == ItemTouchHelper.RIGHT) {
+                    // Perform archive action
+                    Toast.makeText(requireContext(), "Archived item", Toast.LENGTH_SHORT).show()
+                    adapter.archiveItem(position)
+                }
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onDestroyView() {
