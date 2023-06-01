@@ -7,25 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.software1t.notes.databinding.FragmentEditNoteBinding
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class EditNote : Fragment() {
 
-    private val viewModel: EditNoteViewModel by viewModels(factoryProducer = {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return EditNoteViewModel(
-                    application = requireActivity().application, noteId = noteId
-                ) as T
-            }
-        }
-    })
+    private val viewModel: EditNoteViewModel by viewModel { parametersOf(requireActivity().application, noteId) }
 
     private var _binding: FragmentEditNoteBinding? = null
     private val binding get() = _binding!!
@@ -34,8 +24,9 @@ class EditNote : Fragment() {
     private var isNewNote = false
 
     private var _title: TextInputEditText? = null
-    private var _desc: TextInputEditText? = null
     private val title get() = _title!!
+
+    private var _desc: TextInputEditText? = null
     private val desc get() = _desc!!
 
 
