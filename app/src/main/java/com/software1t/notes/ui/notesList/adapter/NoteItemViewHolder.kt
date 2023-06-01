@@ -8,7 +8,7 @@ import com.software1t.notes.databinding.NoteItemBinding
 import com.software1t.notes.ui.notesList.NotesListDirections
 
 
-class ItemViewHolder(
+class NoteItemViewHolder(
     view: View,
     private val navController: NavController
 ) : RecyclerView.ViewHolder(view) {
