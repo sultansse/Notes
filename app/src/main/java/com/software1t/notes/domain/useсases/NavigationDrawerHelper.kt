@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.notesList.logic
+package com.software1t.notes.domain.useсases
 
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity

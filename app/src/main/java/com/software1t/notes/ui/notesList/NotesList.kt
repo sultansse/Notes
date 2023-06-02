@@ -15,9 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.databinding.FragmentNoteListBinding
-import com.software1t.notes.ui.notesList.adapter.NoteItemsAdapter
-import com.software1t.notes.ui.notesList.logic.LayoutManagerSwitch
-import com.software1t.notes.ui.notesList.logic.NavigationDrawerHelper
+import com.software1t.notes.domain.useсases.LayoutManagerSwitch
+import com.software1t.notes.domain.useсases.NavigationDrawerHelper
+import com.software1t.notes.ui.adapter.notesList.NoteItemsAdapter
 
 @RequiresApi(Build.VERSION_CODES.M)
 class NotesList : Fragment() {

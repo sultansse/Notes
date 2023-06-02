@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.notesList.adapter
+package com.software1t.notes.ui.adapter.notesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

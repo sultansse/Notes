@@ -13,26 +13,8 @@ val AppModule = module {
     factory { (application: Application, noteId: Long) -> EditNoteViewModel(application, noteId) }
 }
 
-//val dbModule = module {
-//    single {
-//        NotesDatabase.getInstance(androidContext())
-//    }
-//}
-//
-//val viewModelModule = module {
-//    factory { NewNoteViewModel(get()) }
-//    factory { NotesListViewModel(get()) }
-//    factory { NoteViewViewModel(get()) }
-//}
-//
 //val useCaseModule = module {
 //    factory { NewNoteUseCase(get()) }
 //    factory { GetNotesUseCase(get()) }
 //    factory { FetchNoteByIdUseCase(get()) }
-//}
-//
-//val repositoryModule = module {
-//    single<NotesRepository> {
-//        NotesRepositoryImpl(get())
-//    }
 //}

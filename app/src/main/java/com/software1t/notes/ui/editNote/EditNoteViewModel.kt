@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.software1t.notes.data.local.NoteDatabase
 import com.software1t.notes.data.local.model.NoteLocalModel
-import com.software1t.notes.ui.notesList.adapter.NoteItem
+import com.software1t.notes.ui.adapter.notesList.NoteItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.notesList.logic
+package com.software1t.notes.domain.useсases
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
