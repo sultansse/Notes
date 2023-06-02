@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val AppModule = module {
     viewModel { NotesListViewModel(get()) }
-    factory { (application: Application, noteId: Long) -> EditNoteViewModel(application, noteId) }
+    viewModel { (application: Application, noteId: Long) -> EditNoteViewModel(application, noteId) }
 }
 
 //val useCaseModule = module {
