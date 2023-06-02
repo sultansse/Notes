@@ -66,10 +66,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/transparent"
             android:hint="  Some Title"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:minHeight="48dp" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/desc_editText"
@@ -80,11 +77,16 @@
             android:backgroundTint="@color/transparent"
             android:gravity="start"
             android:hint="  Start typing here ..."
-            android:lineSpacingExtra="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_editText" />
+            android:lineSpacingExtra="4dp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lastModified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:text="Last Modified: 12/12/2020"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

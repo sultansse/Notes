@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.databinding.FragmentEditNoteBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -29,6 +30,9 @@ class EditNote : Fragment() {
     private var _desc: TextInputEditText? = null
     private val desc get() = _desc!!
 
+    private var _lastModified: MaterialTextView? = null
+    private val lastModified get() = _lastModified!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -42,6 +46,7 @@ class EditNote : Fragment() {
 
         _title = binding.titleEditText
         _desc = binding.descEditText
+        _lastModified = binding.lastModified
 
         getNoteId()
         setTopToolbar()
@@ -56,6 +61,7 @@ class EditNote : Fragment() {
         _binding = null
         _title = null
         _desc = null
+        _lastModified = null
     }
 
     private fun setTopToolbar() {
@@ -74,11 +80,13 @@ class EditNote : Fragment() {
         if (noteId == -1L) isNewNote = true
     }
 
+    //todo timestamp is shown as long, fix it
     private fun setObservers() {
         viewModel.currentNote.observe(viewLifecycleOwner) {
             if (!isNewNote) {
                 title.setText(it.title)
                 desc.setText(it.description)
+                lastModified.text = it.noteTimestamp.lastModifiedAt.toString()
             }
         }
     }

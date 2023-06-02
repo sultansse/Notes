@@ -1,11 +1,11 @@
 package com.software1t.notes
 
 import android.app.Application
-import com.software1t.notes.di.AppModule
+import com.software1t.notes.di.databaseModule
+import com.software1t.notes.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
-
 
 class MainApplication : Application() {
 
@@ -15,8 +15,7 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(listOf(AppModule/*, DatabaseModule*/))
+            modules(listOf(viewModelModule, databaseModule))
         }
-
     }
 }

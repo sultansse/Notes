@@ -10,18 +10,19 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.domain.useсases.LayoutManagerSwitch
 import com.software1t.notes.domain.useсases.NavigationDrawerHelper
-import com.software1t.notes.ui.adapter.notesList.NoteItemsAdapter
+import com.software1t.notes.ui.adapter.NoteItemsAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 @RequiresApi(Build.VERSION_CODES.M)
 class NotesList : Fragment() {
-    private val viewModel: NotesListViewModel by viewModels()
+    private val viewModel: NotesListViewModel by viewModel { parametersOf(requireActivity().application)}
     private lateinit var binding: FragmentNoteListBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NoteItemsAdapter

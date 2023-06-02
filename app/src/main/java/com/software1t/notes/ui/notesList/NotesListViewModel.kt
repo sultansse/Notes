@@ -6,15 +6,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.software1t.notes.data.local.MockData
-import com.software1t.notes.data.local.NoteDatabase
-import com.software1t.notes.data.local.model.NoteLocalModel
-import com.software1t.notes.ui.adapter.notesList.NoteItem
+import com.software1t.notes.data.local.entities.NotesEntity
+import com.software1t.notes.domain.repository.NotesRepository
+import com.software1t.notes.ui.model.NoteItem
 
-class NotesListViewModel(application: Application) : AndroidViewModel(application) {
+class NotesListViewModel(
+    application: Application,
+    private val notesRepository: NotesRepository
+) : AndroidViewModel(application) {
 
-    private val noteDao = NoteDatabase.getInstance(application).noteDao()
-    private val allNotes = noteDao.getAllNotes()
+//    private val noteDao = NotesDatabase.getInstance(application).noteDao()
+//    private val allNotes = noteDao.getAllNotes()
+    private val allNotes = notesRepository.getAllNotes()
 
     private val sharedPreferences =
         application.getSharedPreferences("HomeFragmentPrefs", Context.MODE_PRIVATE)
@@ -56,15 +59,15 @@ class NotesListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    private fun filterNotes(noteLocalModelList: List<NoteLocalModel>): List<NoteItem> {
+    private fun filterNotes(notesEntityList: List<NotesEntity>): List<NoteItem> {
         val currentQuery = query.value?.lowercase()
         return if (currentQuery.isNullOrBlank()) {
-            noteLocalModelList.map { note ->
+            notesEntityList.map { note ->
                 NoteItem(note.id, note.title, note.description)
             }
         } else {
             val lowerCaseQuery = currentQuery.lowercase()
-            noteLocalModelList.filter { note ->
+            notesEntityList.filter { note ->
                 note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
                     .contains(lowerCaseQuery)
             }.map { note ->
@@ -93,10 +96,10 @@ class NotesListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun insertMockData() {
-        noteDao.insertAllNotes(MockData().mockNoteLocalModels)
+//        noteDao.insertAllNotes(MockData().mockNotesEntities)
     }
 
     private fun deleteAllMockData() {
-        noteDao.deleteAllNotes()
+//        noteDao.deleteAllNotes()
     }
 }

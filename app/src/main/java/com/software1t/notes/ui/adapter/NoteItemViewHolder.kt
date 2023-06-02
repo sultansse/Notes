@@ -1,10 +1,11 @@
-package com.software1t.notes.ui.adapter.notesList
+package com.software1t.notes.ui.adapter
 
 import android.view.View
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.databinding.NoteItemBinding
+import com.software1t.notes.ui.model.NoteItem
 import com.software1t.notes.ui.notesList.NotesListDirections
 
 
