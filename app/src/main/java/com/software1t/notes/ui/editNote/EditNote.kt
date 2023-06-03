@@ -46,9 +46,9 @@ class EditNote : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _title = binding.titleEditText
-        _desc = binding.descEditText
-        _lastModified = binding.lastModified
+        _title = binding.titleEt
+        _desc = binding.descEt
+        _lastModified = binding.modifiedTimeTv
 
         getNoteId()
         setTopToolbar()
@@ -97,7 +97,7 @@ class EditNote : Fragment() {
     }
 
     private fun setSaveButton() {
-        binding.save.setOnClickListener {
+        binding.saveBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Added successfully!", Toast.LENGTH_SHORT).show()
             viewModel.onClickSave(
                 title.text.toString(),
@@ -107,7 +107,7 @@ class EditNote : Fragment() {
     }
 
     private fun setDeleteButton() {
-        binding.deleteButton.setOnClickListener {
+        binding.deleteBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
             viewModel.deleteNote()
@@ -115,11 +115,11 @@ class EditNote : Fragment() {
     }
 
     private fun setCopyButton() {
-        binding.copyButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
-            viewModel.copyNote()
-        }
+//        binding.copyButton.setOnClickListener {
+//            Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
+//            findNavController().popBackStack()
+//            viewModel.copyNote()
+//        }
     }
 
 

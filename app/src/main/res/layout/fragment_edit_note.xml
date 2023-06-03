@@ -1,133 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:ignore="HardcodedText">
-
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/top_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="?android:attr/actionBarSize">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/deleteButton"
-            android:layout_width="50dp"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="6dp"
-            android:background="@color/transparent"
-            android:foreground="?attr/actionBarItemBackground"
-            android:paddingHorizontal="12dp"
-            app:icon="@drawable/ic_delete_filled" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/copyButton"
-            android:layout_width="50dp"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="6dp"
-            android:background="@color/transparent"
-            android:foreground="?attr/actionBarItemBackground"
-            android:paddingHorizontal="12dp"
-            app:icon="@drawable/ic_copy" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/delete_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginHorizontal="6dp"
+            android:background="@null"
             android:foreground="?attr/actionBarItemBackground"
-            app:icon="@drawable/ic_save"
-            app:iconGravity="textStart" />
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_delete_filled" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/archive_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:foreground="?attr/actionBarItemBackground"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_archive" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingHorizontal="36dp"
+            android:src="@drawable/ic_save" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/textArea"
+        android:id="@+id/text_area_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginVertical="6dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_toolbar">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/title_editText"
+            android:id="@+id/title_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:backgroundTint="@color/transparent"
-            android:hint="  Some Title"
-            android:minHeight="48dp" />
+            android:hint="Some Title"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="14dp"/>
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/desc_editText"
+            android:id="@+id/desc_et"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:backgroundTint="@color/transparent"
             android:gravity="start"
-            android:hint="  Start typing here ..."
-            android:lineSpacingExtra="4dp" />
+            android:hint="Start typing here ..."
+            android:lineSpacingExtra="4dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="14dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <!--        todo make toolbar upper of keyboard -->
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/bottom_toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bottom_toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/add"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@null"
-                android:foreground="?attr/actionBarItemBackground"
-                android:padding="14dp"
-                android:src="@drawable/ic_add_box" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/add_items_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:foreground="?attr/actionBarItemBackground"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_add_box" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/color_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:background="@null"
-                android:foreground="?attr/actionBarItemBackground"
-                android:padding="14dp"
-                android:src="@drawable/ic_background_color" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/background_color_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:foreground="?attr/actionBarItemBackground"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_background_color" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lastModified"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:padding="14dp"
-                android:text="Last Modified: 12/12/2020"
-                android:textSize="16sp" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/modified_time_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Last Modified: 12/12/2020"
+            android:textSize="16sp" />
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/bottom_toolbar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center_vertical"
-                app:menu="@menu/bottom_toolbar_edit_note" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+<!--       todo change "copy" to "more" -->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/copy_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="@null"
+            android:foreground="?attr/actionBarItemBackground"
+            android:paddingHorizontal="16dp"
+            android:src="@drawable/ic_copy" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
