@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.ListAdapter
-import com.software1t.notes.R
+import com.software1t.notes.databinding.NoteItemBinding
 import com.software1t.notes.ui.model.NoteItem
 
 class NoteItemsAdapter(
@@ -12,9 +12,8 @@ class NoteItemsAdapter(
 ) : ListAdapter<NoteItem, NoteItemViewHolder>(NoteItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteItemViewHolder {
-        val adapterLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-        return NoteItemViewHolder(adapterLayout, navController)
+        val binding = NoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NoteItemViewHolder(binding, navController, this)
     }
 
     override fun onBindViewHolder(holder: NoteItemViewHolder, position: Int) {
