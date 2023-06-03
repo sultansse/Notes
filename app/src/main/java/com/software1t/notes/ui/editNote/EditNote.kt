@@ -13,6 +13,8 @@ import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.databinding.FragmentEditNoteBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EditNote : Fragment() {
 
@@ -86,7 +88,10 @@ class EditNote : Fragment() {
             if (!isNewNote) {
                 title.setText(it.title)
                 desc.setText(it.description)
-                lastModified.text = it.noteTimestamp.lastModifiedAt.toString()
+                val currentTime = it.noteTimestamp.lastModifiedAt
+                val dateFormat = SimpleDateFormat("HH:mm:ss - dd\\MM\\yyyy", Locale.getDefault())
+                val formattedTimestamp = dateFormat.format(currentTime)
+                lastModified.text = formattedTimestamp.toString()
             }
         }
     }

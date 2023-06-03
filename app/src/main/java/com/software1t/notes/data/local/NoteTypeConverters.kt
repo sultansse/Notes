@@ -16,8 +16,9 @@ class NoteTypeConverters {
     @TypeConverter
     fun toNoteTimestamp(timestamp: String): NoteTimestamp {
         val currentTime = System.currentTimeMillis()
-        val lastModifiedAt = dateFormat.parse(timestamp)?.time ?: currentTime
-        return NoteTimestamp(createdAt = currentTime, lastModifiedAt = lastModifiedAt)
+        val formattedTimestamp = dateFormat.format(currentTime)
+//        val lastModifiedAt = dateFormat.parse(timestamp)?.time ?: currentTime todo
+        return NoteTimestamp(createdAt = currentTime, lastModifiedAt = currentTime)
     }
 }
 
