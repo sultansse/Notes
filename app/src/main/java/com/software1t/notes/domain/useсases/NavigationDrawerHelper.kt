@@ -1,7 +1,7 @@
 package com.software1t.notes.domain.useсases
 
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -19,9 +19,9 @@ class NavigationDrawerHelper(private val activity: AppCompatActivity) {
     }
 
     private fun setupMenuImageView() {
-        val menuImageView: ImageView = activity.findViewById(R.id.menu_imageView)
+        val menuImageBtn: AppCompatImageButton = activity.findViewById(R.id.menu_btn)
 
-        menuImageView.setOnClickListener {
+        menuImageBtn.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
     }

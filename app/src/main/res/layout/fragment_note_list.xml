@@ -18,36 +18,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/menu_imageView"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginStart="10dp"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ic_baseline_menu_24" />
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
-            android:layout_marginStart="60dp"
-            android:layout_marginEnd="60dp"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="Search in notes"
-            app:searchIcon="@null" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/menu_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_baseline_menu_24" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/layoutManagerIcon_ImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="10dp"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ic_baseline_grid_view_24" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search in notes" />
 
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/layoutManagerIcon_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:paddingHorizontal="16dp"
+                android:src="@drawable/ic_baseline_grid_view_24" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

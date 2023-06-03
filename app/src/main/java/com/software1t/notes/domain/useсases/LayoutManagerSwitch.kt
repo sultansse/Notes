@@ -20,7 +20,7 @@ class LayoutManagerSwitch(
             LinearLayoutManager(binding.root.context)
         }
 
-        binding.layoutManagerIconImageView.setImageResource(
+        binding.layoutManagerIconBtn.setImageResource(
             if (isGrid) R.drawable.ic_outline_linear_view_24
             else R.drawable.ic_baseline_grid_view_24
         )
@@ -29,7 +29,7 @@ class LayoutManagerSwitch(
     }
 
     init {
-        binding.layoutManagerIconImageView.setOnClickListener {
+        binding.layoutManagerIconBtn.setOnClickListener {
             viewModel.onLayoutManagerIconClick()
         }
 
