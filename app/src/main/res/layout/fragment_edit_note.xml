@@ -22,6 +22,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
+            android:foreground="?attr/actionBarItemBackground"
             android:background="@color/transparent"
             android:paddingHorizontal="12dp"
             app:icon="@drawable/ic_baseline_delete_24" />
@@ -32,6 +33,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
+            android:foreground="?attr/actionBarItemBackground"
             android:background="@color/transparent"
             android:paddingHorizontal="12dp"
             app:icon="@drawable/ic_baseline_content_copy_24" />
@@ -40,6 +42,7 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:foreground="?attr/actionBarItemBackground"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
             app:icon="@drawable/ic_baseline_save_24"
@@ -86,20 +89,35 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:padding="14dp"
+                android:background="@null"
+                android:foreground="?attr/actionBarItemBackground"
+                android:src="@drawable/ic_outline_add_box_24"
+                android:tint="@color/black" />
+            
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/color_picker"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:padding="14dp"
+                android:background="@null"
+                android:foreground="?attr/actionBarItemBackground"
                 android:src="@drawable/ic_baseline_color_lens_24"
                 android:tint="@color/black" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lastModified"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="12dp"
+                android:padding="14dp"
                 android:text="Last Modified: 12/12/2020"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -108,6 +126,7 @@
                 android:id="@+id/bottom_toolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_gravity="center_vertical"
                 app:menu="@menu/bottom_toolbar_edit_note" />
         </androidx.appcompat.widget.LinearLayoutCompat>
