@@ -21,8 +21,8 @@ class LayoutManagerSwitch(
         }
 
         binding.layoutManagerIconBtn.setImageResource(
-            if (isGrid) R.drawable.ic_outline_linear_view_24
-            else R.drawable.ic_baseline_grid_view_24
+            if (isGrid) R.drawable.ic_layout_linearview
+            else R.drawable.ic_layout_gridview
         )
 
         recyclerView.layoutManager = layoutManager

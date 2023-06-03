@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/notifications"
-        android:icon="@drawable/ic_baseline_notifications_none_24"
+        android:icon="@drawable/ic_notifications_outlined"
         android:title="@string/notifications" />
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_outline_settings_24"
+        android:icon="@drawable/ic_settings_outlined"
         android:title="@string/settings" />
     <item
         android:id="@+id/questions"
-        android:icon="@drawable/ic_baseline_question_mark_24"
+        android:icon="@drawable/ic_question_mark"
         android:title="@string/questions" />
     <item
         android:id="@+id/rate"
-        android:icon="@drawable/ic_outline_star_rate_24"
+        android:icon="@drawable/ic_star_outlined"
         android:title="@string/rate" />
 </menu>
