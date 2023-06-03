@@ -22,8 +22,8 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
-            android:foreground="?attr/actionBarItemBackground"
             android:background="@color/transparent"
+            android:foreground="?attr/actionBarItemBackground"
             android:paddingHorizontal="12dp"
             app:icon="@drawable/ic_delete_filled" />
 
@@ -33,8 +33,8 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
-            android:foreground="?attr/actionBarItemBackground"
             android:background="@color/transparent"
+            android:foreground="?attr/actionBarItemBackground"
             android:paddingHorizontal="12dp"
             app:icon="@drawable/ic_copy" />
 
@@ -42,9 +42,9 @@
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:foreground="?attr/actionBarItemBackground"
             android:layout_gravity="end"
             android:layout_marginHorizontal="6dp"
+            android:foreground="?attr/actionBarItemBackground"
             app:icon="@drawable/ic_save"
             app:iconGravity="textStart" />
 
@@ -82,7 +82,7 @@
             android:hint="  Start typing here ..."
             android:lineSpacingExtra="4dp" />
 
-<!--        todo make toolbar upper of keyboard -->
+        <!--        todo make toolbar upper of keyboard -->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/bottom_toolbar_layout"
             android:layout_width="match_parent"
@@ -94,32 +94,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:padding="14dp"
                 android:background="@null"
                 android:foreground="?attr/actionBarItemBackground"
-                android:src="@drawable/ic_add_box"
-                android:tint="@color/black" />
-            
+                android:padding="14dp"
+                android:src="@drawable/ic_add_box" />
+
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/color_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:padding="14dp"
                 android:background="@null"
                 android:foreground="?attr/actionBarItemBackground"
-                android:src="@drawable/ic_background_color"
-                android:tint="@color/black" />
+                android:padding="14dp"
+                android:src="@drawable/ic_background_color" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lastModified"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:padding="14dp"
                 android:text="Last Modified: 12/12/2020"
-                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <com.google.android.material.appbar.MaterialToolbar
