@@ -11,7 +11,6 @@ import com.software1t.notes.ui.notesList.NotesListDirections
 class NoteItemViewHolder(
     private val binding: NoteItemBinding,
     private val navController: NavController,
-    private val adapter: NoteItemsAdapter
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
@@ -21,13 +20,14 @@ class NoteItemViewHolder(
     fun bind(item: NoteItem) {
         binding.titleTextView.text = item.title
         binding.descTextView.text = item.description
+        binding.root.tag = item
     }
 
     override fun onClick(view: View) {
-        val position = absoluteAdapterPosition
-        if (position != RecyclerView.NO_POSITION) {
-            val itemId = adapter.getItemId(position)
-            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(noteId = itemId)
+        val item = view.tag as? NoteItem
+        if (item != null) {
+            val itemId = item.id
+            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(noteId = itemId.toLong())
             navController.navigate(action)
         }
     }

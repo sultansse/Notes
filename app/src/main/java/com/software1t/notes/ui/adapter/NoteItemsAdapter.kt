@@ -13,7 +13,7 @@ class NoteItemsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteItemViewHolder {
         val binding = NoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NoteItemViewHolder(binding, navController, this)
+        return NoteItemViewHolder(binding, navController)
     }
 
     override fun onBindViewHolder(holder: NoteItemViewHolder, position: Int) {
