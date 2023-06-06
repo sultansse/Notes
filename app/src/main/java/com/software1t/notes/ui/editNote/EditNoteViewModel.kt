@@ -15,64 +15,37 @@ import kotlinx.coroutines.launch
 class EditNoteViewModel(
     application: Application,
     private val noteId: Long,
-    private val notesRepository: NotesRepository // Inject NotesRepository
+    private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
-
-    //   private val noteDao = NotesDatabase.getDatabase(application).noteDao()
 
     private var _notes = MutableLiveData<List<NoteItem>>()
     val notes: LiveData<List<NoteItem>> get() = _notes
-    //todo timestamp is shown as long, fix it
-    var currentNote: LiveData<NotesEntity> = notesRepository.getNote(noteId) // Retrieve note using the repository
-    private var isNewNote = false
 
-    init {
-        if (noteId == -1L) isNewNote = true
-    }
-
+    var currentNote: LiveData<NotesEntity> = notesRepository.getNote(noteId)
 
     fun onClickSave(title: String, desc: String) {
         CoroutineScope(Dispatchers.IO).launch {
-         /*   val currentTime = System.currentTimeMillis()
-            val noteTimestamp = NoteTimestamp(
-                createdAt = currentNote.value?.noteTimestamp?.createdAt ?: currentTime,
-                lastModifiedAt = currentTime
-            )
-            val note = if (isNewNote) {
-                NotesEntity(
-                    title = title,
-                    description = desc,
-                    noteTimestamp = noteTimestamp
-                )
-            } else {
-                currentNote.value?.copy(
-                    title = title,
-                    description = desc,
-                    noteTimestamp = noteTimestamp
-                )
-            }
-            note.let {
-                if (isNewNote) {
-                    noteDao.insertNote(it)
-                } else {
-                    noteDao.updateNote(it)
-                }
-            }*/
             val obj = SaveButtonClick(notesRepository) //todo inject as parameter
-            obj.execute(title, desc, currentNote, isNewNote)
+            obj.execute(title, desc, noteId)
         }
     }
 
     fun deleteNote() {
-//        noteDao.deleteNote(currentNote.value!!)
+        CoroutineScope(Dispatchers.IO).launch {
+            notesRepository.deleteNote(currentNote.value!!)
+        }
     }
 
     fun copyNote() {
-//        noteDao.insertNote(
-//            NotesEntity(
-//                title = "${currentNote.value?.title} COPY",
-//                description = currentNote.value?.description.toString()
+//        CoroutineScope(Dispatchers.IO).launch {
+//            notesRepository.insertNote(
+//                NotesEntity(
+//                    title = "${currentNote.value?.title} COPY",
+//                    description = currentNote.value?.description.toString(),
+//                    noteTimestamp = currentNote.value?.noteTimestamp!!
+//                )
 //            )
-//        )
+//        }
+
     }
 }
