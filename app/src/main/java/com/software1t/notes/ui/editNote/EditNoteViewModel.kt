@@ -37,15 +37,15 @@ class EditNoteViewModel(
     }
 
     fun copyNote() {
-//        CoroutineScope(Dispatchers.IO).launch {
-//            notesRepository.insertNote(
-//                NotesEntity(
-//                    title = "${currentNote.value?.title} COPY",
-//                    description = currentNote.value?.description.toString(),
-//                    noteTimestamp = currentNote.value?.noteTimestamp!!
-//                )
-//            )
-//        }
+        CoroutineScope(Dispatchers.IO).launch {
+            notesRepository.insertNote(
+                NotesEntity(
+                    title = "${currentNote.value?.title} COPY",
+                    description = currentNote.value?.description.toString(),
+                    noteTimestamp = currentNote.value?.noteTimestamp!!
+                )
+            )
+        }
 
     }
 }

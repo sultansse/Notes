@@ -122,11 +122,7 @@ class EditNote : Fragment() {
     private fun setCopyButton() {
         binding.copyBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
-//            viewModel.copyNote()
-            viewModel.onClickSave(
-                title.text.toString(),
-                desc.text.toString(),
-            )
+            viewModel.copyNote()
             findNavController().popBackStack()
         }
     }
