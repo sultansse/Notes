@@ -14,12 +14,12 @@ class SaveButtonClick(private val notesRepository: NotesRepository) { // Inject 
             lastModifiedAt = currentNote.value?.noteTimestamp?.lastModifiedAt ?: currentTime
         )
 
-        lateinit var note: NotesEntity
+        val note = NotesEntity(
+            id = noteId, title = title, description = desc, noteTimestamp = noteTimestamp
+        )
         if (noteId == -1L) {
-            note = NotesEntity(title = title, description = desc, noteTimestamp = noteTimestamp)
             notesRepository.insertNote(note)
         } else {
-            note = currentNote.value?.copy(title = title, description = desc, noteTimestamp = noteTimestamp)!!
             notesRepository.updateNote(note)
         }
     }

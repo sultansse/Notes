@@ -107,26 +107,27 @@ class EditNote : Fragment() {
                 title.text.toString(),
                 desc.text.toString(),
             )
+            findNavController().popBackStack()
         }
     }
 
     private fun setDeleteButton() {
         binding.deleteBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
             viewModel.deleteNote()
+            findNavController().popBackStack()
         }
     }
 
     private fun setCopyButton() {
         binding.copyBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack()
 //            viewModel.copyNote()
             viewModel.onClickSave(
                 title.text.toString(),
                 desc.text.toString(),
             )
+            findNavController().popBackStack()
         }
     }
 }
