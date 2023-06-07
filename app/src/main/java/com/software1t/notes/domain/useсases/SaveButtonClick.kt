@@ -4,9 +4,12 @@ import com.software1t.notes.data.local.entities.NotesEntity
 import com.software1t.notes.data.local.model.NoteTimestamp
 import com.software1t.notes.domain.repository.NotesRepository
 
-class SaveButtonClick(private val notesRepository: NotesRepository) { // Inject NotesRepository
+class SaveButtonClick(private val notesRepository: NotesRepository) {
     suspend fun execute(title: String, desc: String, noteId: Long) {
         val currentNote = notesRepository.getNote(noteId)
+
+//        class SaveButtonClick(private val notesRepository: NotesRepository) {
+//            suspend fun execute(note: NotesEntity) {
 
         val currentTime = System.currentTimeMillis()
         val noteTimestamp = NoteTimestamp(
@@ -18,6 +21,7 @@ class SaveButtonClick(private val notesRepository: NotesRepository) { // Inject 
             id = noteId, title = title, description = desc, noteTimestamp = noteTimestamp
         )
         if (noteId == -1L) {
+//            if (note.id == -1L) {
             notesRepository.insertNote(note)
         } else {
             notesRepository.updateNote(note)

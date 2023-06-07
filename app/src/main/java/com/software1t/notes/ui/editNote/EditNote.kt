@@ -11,25 +11,14 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.software1t.notes.databinding.FragmentEditNoteBinding
+import com.software1t.notes.utils.Extenshions.Companion.getFormattedTimestamp
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class EditNote : Fragment() {
 
-    private val viewModel: EditNoteViewModel by viewModel {
-        parametersOf(
-            requireActivity().application,
-            noteId
-        )
-    }
-
     private var _binding: FragmentEditNoteBinding? = null
     private val binding get() = _binding!!
-
-    private var noteId: Long = -1
-    private var isNewNote = false
 
     private var _title: TextInputEditText? = null
     private val title get() = _title!!
@@ -40,6 +29,16 @@ class EditNote : Fragment() {
     private var _lastModified: MaterialTextView? = null
     private val lastModified get() = _lastModified!!
 
+
+    private var noteId: Long = -1L
+    private var isNewNote = false
+
+    private val viewModel: EditNoteViewModel by viewModel {
+        parametersOf(
+            requireActivity().application,
+            noteId
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -57,10 +56,22 @@ class EditNote : Fragment() {
 
         getNoteId()
         setTopToolbar()
-        setObservers()
+        setCurrentNoteData()
         setSaveButton()
         setCopyButton()
         setDeleteButton()
+
+
+       /* viewModel.noteType.observe(this) { state ->
+            when (state) {
+                is NoteType.NewNote -> {
+                    // Logic for handling a new note state
+                }
+                is NoteType.ExistingNote -> {
+                    // Logic for handling an existing note state
+                }
+            }
+        }*/
     }
 
     override fun onDestroy() {
@@ -72,31 +83,32 @@ class EditNote : Fragment() {
     }
 
     private fun getNoteId() {
-        val args = EditNoteArgs.fromBundle(requireArguments())
-        noteId = args.noteId
+        noteId = EditNoteArgs.fromBundle(requireArguments()).noteId
         if (noteId == -1L) isNewNote = true
     }
 
     private fun setTopToolbar() {
         val topToolbar = binding.topToolbar
-        (activity as AppCompatActivity).setSupportActionBar(topToolbar)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(topToolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
 
         topToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
 
-    private fun setObservers() {
-        viewModel.currentNote.observe(viewLifecycleOwner) {
-            if (!isNewNote) {
-                title.setText(it.title)
-                desc.setText(it.description)
-                val currentTimeMillis = it.noteTimestamp.lastModifiedAt
-                val dateFormat = SimpleDateFormat("HH:mm:ss - dd/MM/yyyy", Locale.getDefault())
-                val formattedTimestamp = dateFormat.format(currentTimeMillis)
-                lastModified.text = "last changes:\n $formattedTimestamp"
-            }
+    private fun setCurrentNoteData() {
+        viewModel.currentNote.observe(viewLifecycleOwner) { note ->
+            // todo correct way
+            val defaultTitle = if (isNewNote) "" else note.title
+            val defaultDesc = if (isNewNote) "" else note.description
+            val lastModifiedTime = if (isNewNote) System.currentTimeMillis() else note.noteTimestamp.lastModifiedAt
+
+            title.setText(defaultTitle)
+            desc.setText(defaultDesc)
+            lastModified.text = "last changes:\n ${getFormattedTimestamp(lastModifiedTime)}"
         }
     }
 
@@ -104,25 +116,25 @@ class EditNote : Fragment() {
         binding.saveBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Saved successfully!", Toast.LENGTH_SHORT).show()
             viewModel.onClickSave(
+                // todo : pass only note
                 title.text.toString(),
                 desc.text.toString(),
             )
-            findNavController().popBackStack()
         }
     }
 
     private fun setDeleteButton() {
         binding.deleteBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.deleteNote()
+            viewModel.onDeleteNote()
             findNavController().popBackStack()
         }
     }
 
     private fun setCopyButton() {
         binding.copyBtn.setOnClickListener {
+            // todo correct Toast
             Toast.makeText(requireContext(), "Copied successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.copyNote()
+            viewModel.onCopyNote()
             findNavController().popBackStack()
         }
     }
