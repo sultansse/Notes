@@ -6,16 +6,20 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.software1t.notes.data.local.MockData
 import com.software1t.notes.data.local.entities.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
 import com.software1t.notes.ui.model.NoteItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NotesListViewModel(
     application: Application,
     private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-//    private val noteDao = NotesDatabase.getInstance(application).noteDao()
+    //    private val noteDao = NotesDatabase.getInstance(application).noteDao()
 //    private val allNotes = noteDao.getAllNotes()
     private val allNotes = notesRepository.getAllNotes()
 
@@ -34,8 +38,8 @@ class NotesListViewModel(
     val notes: LiveData<List<NoteItem>> = _notes
 
     init {
-//        deleteAllMockData()
-//        insertMockData()
+        deleteAllMockData()
+        insertMockData()
 
         restoreLayoutManagerState()
         updateFilteredNotes()
@@ -96,10 +100,14 @@ class NotesListViewModel(
     }
 
     private fun insertMockData() {
-//        noteDao.insertAllNotes(MockData().mockNotesEntities)
+        CoroutineScope(Dispatchers.Main).launch {
+            notesRepository.insertAllNotes(MockData.mockNotes)
+        }
     }
 
     private fun deleteAllMockData() {
-//        noteDao.deleteAllNotes()
+        CoroutineScope(Dispatchers.IO).launch {
+            notesRepository.deleteAllNotes()
+        }
     }
 }
