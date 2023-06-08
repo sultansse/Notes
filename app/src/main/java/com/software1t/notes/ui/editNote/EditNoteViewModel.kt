@@ -1,77 +1,72 @@
 package com.software1t.notes.ui.editNote
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.software1t.notes.data.local.entities.NotesEntity
-import com.software1t.notes.data.local.model.NoteTimestamp
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
-import com.software1t.notes.domain.useсases.SaveButtonClick
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class EditNoteViewModel(
-    application: Application,
-    private val noteId: Long,
-    private val notesRepository: NotesRepository,
-//    private val domainFacade: DomainFacade
+    application: Application, noteId: Long, private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-    var currentNote: LiveData<NotesEntity> = notesRepository.getNote(noteId)
+    private val _currentNote: MutableLiveData<NotesEntity> = MutableLiveData()
+    val currentNote: LiveData<NotesEntity> get() = _currentNote
 
-    /*    val noteType: MutableLiveData<NoteType> = MutableLiveData()
-        fun createNewNote() {
-            noteType.value = NoteType.NewNote
-        }
-        fun loadExistingNote(noteId: Long) {
-            noteType.value = NoteType.ExistingNote(noteId)
-        }*/
+    private var isNewNote = (noteId == -1L)
 
-    fun onClickSave(title: String, desc: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-//            val  myNewNote = NotesEntity(
-//                title = title,
-//                description = desc,
-//                noteTimestamp = NoteTimestamp(System.currentTimeMillis(), System.currentTimeMillis())
-//            )
-//            domainFacade.executeSaveButtonClick(currentNote.value?: myNewNote)
-//            domainFacade.executeSaveButtonClick(title, desc, noteId)
-            val obj = SaveButtonClick(notesRepository) //todo inject as parameter
-            obj.execute(title, desc, noteId)
-        }
-    }
-
-    fun onDeleteNote() {
-        CoroutineScope(Dispatchers.IO).launch {
-            if (currentNote.value == null) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(getApplication(), "Unable to delete unsaved note", Toast.LENGTH_SHORT).show()
-                }
+    init {
+        viewModelScope.launch {
+            if (isNewNote) {
+                val newNotePattern =
+                    NotesEntity(
+                        title = "",
+                        content = "",
+                        lastModifiedTime = System.currentTimeMillis()
+                    )
+                _currentNote.value = newNotePattern
             } else {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(getApplication(), "Deleted successfully!", Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.IO) {
+                    val note = notesRepository.getNoteById(noteId)
+                    _currentNote.postValue(note)
                 }
-                notesRepository.deleteNote(currentNote.value!!)
             }
         }
     }
 
-    fun onCopyNote() {
-        CoroutineScope(Dispatchers.IO).launch {
-            notesRepository.insertNote(
-                NotesEntity(
-                    title = "${currentNote.value?.title} COPY",
-                    description = currentNote.value?.description.toString(),
-                    noteTimestamp = currentNote.value?.noteTimestamp ?: NoteTimestamp(
-                        createdAt = System.currentTimeMillis(),
-                        lastModifiedAt = System.currentTimeMillis()
-                    )
-                )
-            )
+    fun onSaveNote() {
+        viewModelScope.launch {
+            val currentNoteValue = currentNote.value ?: return@launch
+            withContext(Dispatchers.IO) {
+                if (isNewNote) {
+                    notesRepository.insertNote(currentNoteValue)
+                } else {
+                    notesRepository.updateNote(currentNoteValue)
+                }
+            }
         }
+    }
 
+    fun onDeleteNote() {
+        viewModelScope.launch {
+            val currentNoteValue = currentNote.value ?: return@launch
+            withContext(Dispatchers.IO) { notesRepository.deleteNote(currentNoteValue) }
+        }
+    }
+
+    fun onCopyNote() {
+        viewModelScope.launch {
+            val currentNoteValue = currentNote.value ?: return@launch
+            val newNote = currentNoteValue.copy(
+                title = "${currentNoteValue.title} COPY",
+                lastModifiedTime = System.currentTimeMillis()
+            )
+            withContext(Dispatchers.IO) { notesRepository.insertNote(newNote) }
+        }
     }
 }

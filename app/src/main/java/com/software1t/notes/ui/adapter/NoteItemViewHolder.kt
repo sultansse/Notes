@@ -10,7 +10,7 @@ import com.software1t.notes.ui.notesList.NotesListDirections
 
 class NoteItemViewHolder(
     private val binding: NoteItemBinding,
-    private val navController: NavController,
+    private val navController: NavController
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {

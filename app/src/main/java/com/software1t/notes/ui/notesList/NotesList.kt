@@ -19,16 +19,24 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class NotesList : Fragment() {
-    private val viewModel: NotesListViewModel by viewModel { parametersOf(requireActivity().application)}
-    private lateinit var binding: FragmentNoteListBinding
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: NoteItemsAdapter
+
+    private var _binding: FragmentNoteListBinding? = null
+    private val binding get() = _binding!!
+
+    private var _recyclerView: RecyclerView? = null
+    private val recyclerView get() = _recyclerView!!
+
+    private var _adapter: NoteItemsAdapter? = null
+    private val adapter get() = _adapter!!
+
     private lateinit var layoutManagerSwitch: LayoutManagerSwitch
+
+    private val viewModel: NotesListViewModel by viewModel { parametersOf(requireActivity().application) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteListBinding.inflate(inflater, container, false)
+        _binding = FragmentNoteListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,7 +54,7 @@ class NotesList : Fragment() {
         }
 
         binding.fab.setOnClickListener {
-            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(noteId = -1)
+            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment()
             findNavController().navigate(action)
         }
 
@@ -67,9 +75,8 @@ class NotesList : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        recyclerView = binding.recyclerView
-        //todo : change adapter's parameters
-        adapter = NoteItemsAdapter(navController = findNavController()/*viewModel.noteId , navController = findNavController(), notesRepository = viewModel.notesRepository*/)
+        _recyclerView = binding.recyclerView
+        _adapter = NoteItemsAdapter(findNavController())
         recyclerView.adapter = adapter
     }
 
@@ -104,6 +111,9 @@ class NotesList : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
+        _adapter = null
+        _recyclerView = null
         layoutManagerSwitch.onDestroy()
     }
 }

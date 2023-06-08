@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import com.software1t.notes.R
 
 class NavigationDrawerHelper(private val activity: AppCompatActivity) {
+
     private val drawerLayout: DrawerLayout = activity.findViewById(R.id.drawerLayout)
     private val navView: NavigationView = activity.findViewById(R.id.navView)
 

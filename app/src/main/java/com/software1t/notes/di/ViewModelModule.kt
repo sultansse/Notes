@@ -11,6 +11,6 @@ val viewModelModule = module {
         NotesListViewModel(application, get())
     }
     viewModel { (application: Application, noteId: Long) ->
-        EditNoteViewModel(application, noteId, get()/*, get()*/)
+        EditNoteViewModel(application, noteId, get())
     }
 }

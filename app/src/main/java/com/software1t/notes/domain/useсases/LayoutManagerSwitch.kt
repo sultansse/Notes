@@ -13,6 +13,7 @@ class LayoutManagerSwitch(
     private val recyclerView: RecyclerView,
     private val viewModel: NotesListViewModel
 ) {
+
     private val isGridObserver: Observer<Boolean> = Observer { isGrid ->
         val layoutManager: RecyclerView.LayoutManager = if (isGrid) {
             GridLayoutManager(binding.root.context, 2)

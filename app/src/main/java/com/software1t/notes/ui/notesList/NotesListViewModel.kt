@@ -6,41 +6,57 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.software1t.notes.data.local.MockData
-import com.software1t.notes.data.local.entities.NotesEntity
+import androidx.lifecycle.liveData
+import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
 import com.software1t.notes.ui.model.NoteItem
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
+//    private val allNotes: LiveData<List<NotesEntity>> = MutableLiveData(notesRepository.getAllNotes())
+
+//    private val allNotes: LiveData<List<NotesEntity>> by lazy {
+//        MutableLiveData(notesRepository.getAllNotes())
+//    }
+
+//    private val allNotes: LiveData<List<NotesEntity>> by lazy {
+//        MutableLiveData<List<NotesEntity>>().apply {
+//            viewModelScope.launch {
+//                value = withContext(Dispatchers.IO) {
+//                    notesRepository.getAllNotes()
+//                }
+//            }
+//        }
+//    }
+
+//private val allNotes: LiveData<List<NotesEntity>> = liveData(Dispatchers.IO) {
+//    emit(notesRepository.getAllNotes())
+//}
+
+
 
 class NotesListViewModel(
     application: Application,
     private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-    //    private val noteDao = NotesDatabase.getInstance(application).noteDao()
-//    private val allNotes = noteDao.getAllNotes()
-    private val allNotes = notesRepository.getAllNotes()
+    private val allNotes: LiveData<List<NotesEntity>> = liveData(Dispatchers.IO) {
+        emit(notesRepository.getAllNotes())
+    }
 
     private val sharedPreferences =
         application.getSharedPreferences("HomeFragmentPrefs", Context.MODE_PRIVATE)
     private val layoutManagerKey = "layoutManager"
-    private var savedLayoutManager: String? = null
 
     private val _isGrid = MutableLiveData(false)
     val isGrid: LiveData<Boolean> = _isGrid
 
     private val query = MutableLiveData<String>()
-    val isDataEmpty = MutableLiveData(false)
+    private val isDataEmpty = MutableLiveData(false)
 
     private val _notes = MediatorLiveData<List<NoteItem>>()
     val notes: LiveData<List<NoteItem>> = _notes
 
     init {
-        deleteAllMockData()
-        insertMockData()
-
         restoreLayoutManagerState()
         updateFilteredNotes()
     }
@@ -51,37 +67,35 @@ class NotesListViewModel(
 
     private fun updateFilteredNotes() {
         _notes.addSource(allNotes) { noteList ->
-            val filteredNotes = filterNotes(noteList)
-            isDataEmpty.value = filteredNotes.isEmpty()
-            _notes.value = filteredNotes
+            filterAndSetNotes(noteList)
         }
-        _notes.addSource(query) { newQuery ->
-            val noteList = allNotes.value ?: emptyList()
-            val filteredNotes = filterNotes(noteList)
-            isDataEmpty.value = filteredNotes.isEmpty()
-            _notes.value = filteredNotes
+        _notes.addSource(query) { _ ->
+            val noteList = allNotes.value.orEmpty()
+            filterAndSetNotes(noteList)
         }
     }
 
-    private fun filterNotes(notesEntityList: List<NotesEntity>): List<NoteItem> {
+    private fun filterAndSetNotes(noteList: List<NotesEntity>) {
         val currentQuery = query.value?.lowercase()
-        return if (currentQuery.isNullOrBlank()) {
-            notesEntityList.map { note ->
-                NoteItem(note.id, note.title, note.description)
+        val filteredNotes = if (currentQuery.isNullOrBlank()) {
+            noteList.map { note ->
+                NoteItem(note.id, note.title, note.content)
             }
         } else {
             val lowerCaseQuery = currentQuery.lowercase()
-            notesEntityList.filter { note ->
-                note.title.lowercase().contains(lowerCaseQuery) || note.description.lowercase()
+            noteList.filter { note ->
+                note.title.lowercase().contains(lowerCaseQuery) || note.content.lowercase()
                     .contains(lowerCaseQuery)
             }.map { note ->
-                NoteItem(note.id, note.title, note.description)
+                NoteItem(note.id, note.title, note.content)
             }
         }
+        isDataEmpty.value = filteredNotes.isEmpty()
+        _notes.value = filteredNotes
     }
 
     fun onLayoutManagerIconClick() {
-        _isGrid.value = !_isGrid.value!!
+        _isGrid.value = _isGrid.value?.not()
 
         // Save the layout manager state
         val layoutManagerValue = if (_isGrid.value == true) {
@@ -93,21 +107,7 @@ class NotesListViewModel(
     }
 
     private fun restoreLayoutManagerState() {
-        savedLayoutManager = sharedPreferences.getString(layoutManagerKey, null)
-        savedLayoutManager?.let { layoutManagerValue ->
-            _isGrid.value = layoutManagerValue == "grid"
-        }
-    }
-
-    private fun insertMockData() {
-        CoroutineScope(Dispatchers.Main).launch {
-            notesRepository.insertAllNotes(MockData.mockNotes)
-        }
-    }
-
-    private fun deleteAllMockData() {
-        CoroutineScope(Dispatchers.IO).launch {
-            notesRepository.deleteAllNotes()
-        }
+        val layoutManagerValue = sharedPreferences.getString(layoutManagerKey, null)
+        _isGrid.value = layoutManagerValue == "grid"
     }
 }
