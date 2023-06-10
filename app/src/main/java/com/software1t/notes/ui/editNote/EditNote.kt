@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.software1t.notes.databinding.FragmentEditNoteBinding
+import com.software1t.notes.utils.Extenshions.Companion.convertDateStringToMillis
 import com.software1t.notes.utils.Extenshions.Companion.getFormattedTimestamp
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -19,9 +20,15 @@ class EditNote : Fragment() {
     private var _binding: FragmentEditNoteBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: EditNoteViewModel by viewModel { parametersOf(requireActivity().application, noteId) }
+    private val viewModel: EditNoteViewModel by viewModel {
+        parametersOf(
+            requireActivity().application,
+            noteId
+        )
+    }
 
     private var noteId: Long = -1L
+    private var isNewNote = (noteId == -1L)
 
 
     override fun onCreateView(
@@ -29,6 +36,7 @@ class EditNote : Fragment() {
     ): View {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         noteId = EditNoteArgs.fromBundle(requireArguments()).noteId
+        isNewNote = (noteId == -1L)
         return binding.root
     }
 
@@ -42,10 +50,10 @@ class EditNote : Fragment() {
         setDeleteButton()
 
         viewModel.currentNote.observe(viewLifecycleOwner) { note ->
-            binding.titleEt.setText(note.title)
-            binding.descEt.setText(note.content)
-            binding.modifiedTimeTv.text =
-                "last changes:\n ${getFormattedTimestamp(note.lastModifiedTime)}"
+            binding.titleEt.setText(if (isNewNote) "" else note.title)
+            binding.descEt.setText(if (isNewNote) "" else note.content)
+            binding.lastModifiedTimeTv.text =
+                "last changes:\n ${getFormattedTimestamp(if (isNewNote) System.currentTimeMillis() else note.lastModifiedTime)}"
         }
     }
 
@@ -69,7 +77,11 @@ class EditNote : Fragment() {
     private fun setSaveButton() {
         binding.saveBtn.setOnClickListener {
             Toast.makeText(requireContext(), "Saved successfully!", Toast.LENGTH_SHORT).show()
-            viewModel.onSaveNote()
+            viewModel.onSaveNote(
+                binding.titleEt.text.toString(),
+                binding.descEt.text.toString(),
+                convertDateStringToMillis(binding.lastModifiedTimeTv.text.toString())
+            )
             findNavController().popBackStack()
         }
     }

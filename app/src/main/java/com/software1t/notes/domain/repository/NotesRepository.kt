@@ -1,10 +1,13 @@
 package com.software1t.notes.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.software1t.notes.data.local.NotesEntity
 
 interface NotesRepository {
 
-    fun getNoteById(noteId: Long): NotesEntity
+    fun getNoteById(noteId: Long): LiveData<NotesEntity>
+
+    suspend fun deleteNoteById(noteId: Long)
 
     suspend fun insertNote(notesEntity: NotesEntity)
 
@@ -12,7 +15,7 @@ interface NotesRepository {
 
     suspend fun updateNote(notesEntity: NotesEntity)
 
-    fun getAllNotes(): List<NotesEntity>
+    fun getAllNotes(): LiveData<List<NotesEntity>>
 
     suspend fun insertAllNotes(notesEntities: List<NotesEntity>)
 

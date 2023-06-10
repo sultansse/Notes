@@ -1,13 +1,18 @@
 package com.software1t.notes.data.repository
 
+import androidx.lifecycle.LiveData
 import com.software1t.notes.data.local.NoteDao
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
 
 class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
 
-    override fun getNoteById(noteId: Long): NotesEntity {
+    override fun getNoteById(noteId: Long): LiveData<NotesEntity> {
         return noteDao.getNoteById(noteId)
+    }
+
+    override suspend fun deleteNoteById(noteId: Long) {
+        noteDao.deleteNoteById(noteId)
     }
 
     override suspend fun insertNote(notesEntity: NotesEntity) {
@@ -22,7 +27,7 @@ class NotesRepositoryImpl(private val noteDao: NoteDao) : NotesRepository {
         noteDao.updateNote(notesEntity)
     }
 
-    override fun getAllNotes(): List<NotesEntity> {
+    override fun getAllNotes(): LiveData<List<NotesEntity>> {
         return noteDao.getAllNotes()
     }
 

@@ -6,32 +6,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import com.software1t.notes.data.local.MockData
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
 import com.software1t.notes.ui.model.NoteItem
 import kotlinx.coroutines.Dispatchers
-
-//    private val allNotes: LiveData<List<NotesEntity>> = MutableLiveData(notesRepository.getAllNotes())
-
-//    private val allNotes: LiveData<List<NotesEntity>> by lazy {
-//        MutableLiveData(notesRepository.getAllNotes())
-//    }
-
-//    private val allNotes: LiveData<List<NotesEntity>> by lazy {
-//        MutableLiveData<List<NotesEntity>>().apply {
-//            viewModelScope.launch {
-//                value = withContext(Dispatchers.IO) {
-//                    notesRepository.getAllNotes()
-//                }
-//            }
-//        }
-//    }
-
-//private val allNotes: LiveData<List<NotesEntity>> = liveData(Dispatchers.IO) {
-//    emit(notesRepository.getAllNotes())
-//}
-
+import kotlinx.coroutines.launch
 
 
 class NotesListViewModel(
@@ -39,9 +20,7 @@ class NotesListViewModel(
     private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-    private val allNotes: LiveData<List<NotesEntity>> = liveData(Dispatchers.IO) {
-        emit(notesRepository.getAllNotes())
-    }
+    private val allNotes: LiveData<List<NotesEntity>> = notesRepository.getAllNotes()
 
     private val sharedPreferences =
         application.getSharedPreferences("HomeFragmentPrefs", Context.MODE_PRIVATE)
@@ -57,6 +36,9 @@ class NotesListViewModel(
     val notes: LiveData<List<NoteItem>> = _notes
 
     init {
+//        deleteAllMockData()
+//        insertMockData()
+
         restoreLayoutManagerState()
         updateFilteredNotes()
     }
@@ -69,7 +51,7 @@ class NotesListViewModel(
         _notes.addSource(allNotes) { noteList ->
             filterAndSetNotes(noteList)
         }
-        _notes.addSource(query) { _ ->
+        _notes.addSource(query) {
             val noteList = allNotes.value.orEmpty()
             filterAndSetNotes(noteList)
         }
@@ -109,5 +91,18 @@ class NotesListViewModel(
     private fun restoreLayoutManagerState() {
         val layoutManagerValue = sharedPreferences.getString(layoutManagerKey, null)
         _isGrid.value = layoutManagerValue == "grid"
+    }
+
+    private fun insertMockData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val mockNotes = MockData.mockNotes
+            notesRepository.insertAllNotes(mockNotes)
+        }
+    }
+
+    private fun deleteAllMockData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            notesRepository.deleteAllNotes()
+        }
     }
 }

@@ -98,12 +98,12 @@
             android:src="@drawable/ic_background_color" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/modified_time_tv"
+            android:id="@+id/last_modified_time_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Last Modified: 12/12/2020"
+            android:text="Last Modified:\n01:59:59 - 12/12/2020"
             android:textSize="16sp" />
 
 <!--       todo change "copy" to "more" -->

@@ -7,66 +7,63 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class EditNoteViewModel(
-    application: Application, noteId: Long, private val notesRepository: NotesRepository
+    application: Application,
+    private val noteId: Long,
+    private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-    private val _currentNote: MutableLiveData<NotesEntity> = MutableLiveData()
-    val currentNote: LiveData<NotesEntity> get() = _currentNote
+    private val newNote = NotesEntity(
+        id = 0,
+        title = "",
+        content = "",
+        lastModifiedTime = System.currentTimeMillis()
+    )
 
-    private var isNewNote = (noteId == -1L)
-
-    init {
-        viewModelScope.launch {
-            if (isNewNote) {
-                val newNotePattern =
-                    NotesEntity(
-                        title = "",
-                        content = "",
-                        lastModifiedTime = System.currentTimeMillis()
-                    )
-                _currentNote.value = newNotePattern
-            } else {
-                withContext(Dispatchers.IO) {
-                    val note = notesRepository.getNoteById(noteId)
-                    _currentNote.postValue(note)
-                }
-            }
-        }
+    val currentNote: LiveData<NotesEntity> = if (noteId == -1L) {
+        MutableLiveData(newNote)
+    } else {
+        notesRepository.getNoteById(noteId)
     }
 
-    fun onSaveNote() {
+
+    private val isNewNote = (noteId == -1L)
+
+    fun onSaveNote(title: String, content: String, lastModifiedTime: Long) {
         viewModelScope.launch {
-            val currentNoteValue = currentNote.value ?: return@launch
-            withContext(Dispatchers.IO) {
-                if (isNewNote) {
-                    notesRepository.insertNote(currentNoteValue)
-                } else {
-                    notesRepository.updateNote(currentNoteValue)
-                }
+            val note = NotesEntity(
+                id = if (isNewNote) 0 else noteId,
+                title = title,
+                content = content,
+                lastModifiedTime = lastModifiedTime
+            )
+
+            if (isNewNote) {
+                notesRepository.insertNote(note)
+            } else {
+                notesRepository.updateNote(note)
             }
         }
     }
 
     fun onDeleteNote() {
         viewModelScope.launch {
-            val currentNoteValue = currentNote.value ?: return@launch
-            withContext(Dispatchers.IO) { notesRepository.deleteNote(currentNoteValue) }
+            notesRepository.deleteNoteById(noteId)
         }
     }
 
     fun onCopyNote() {
         viewModelScope.launch {
-            val currentNoteValue = currentNote.value ?: return@launch
+            val currentNoteValue = currentNote.value!!
+
             val newNote = currentNoteValue.copy(
-                title = "${currentNoteValue.title} COPY",
+                id = 0,
+                title = "${currentNoteValue.title} (Copy)",
                 lastModifiedTime = System.currentTimeMillis()
             )
-            withContext(Dispatchers.IO) { notesRepository.insertNote(newNote) }
+            notesRepository.insertNote(newNote)
         }
     }
 }
