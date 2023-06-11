@@ -20,8 +20,8 @@ class NoteItemViewHolder(
     }
 
     fun bind(item: NoteItem) {
-        binding.titleTextView.text = item.title
-        binding.descTextView.text = item.description
+        binding.titleTv.text = item.title
+        binding.contentTv.text = item.description
         itemView.tag = item
     }
 }
