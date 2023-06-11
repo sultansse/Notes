@@ -18,7 +18,7 @@ import com.software1t.notes.ui.adapter.NoteItemsAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class NotesList : Fragment() {
+class NotesList : Fragment(), SearchView.OnQueryTextListener {
 
     private var _binding: FragmentNoteListBinding? = null
     private val binding get() = _binding!!
@@ -43,7 +43,6 @@ class NotesList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         setupRecyclerView()
         setupRecyclerViewGestures()
 
@@ -58,20 +57,28 @@ class NotesList : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.onSearchQueryChanged(newText)
-                return true
-            }
-
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.onSearchQueryChanged(query)
-                return true
-            }
-        })
+        binding.searchView.setOnQueryTextListener(this)
 
         val navigationDrawerHelper = NavigationDrawerHelper(requireActivity() as AppCompatActivity)
         navigationDrawerHelper.setupNavigationDrawer()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _adapter = null
+        _recyclerView = null
+        layoutManagerSwitch.onDestroy()
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        viewModel.onSearchQueryChanged(newText)
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        viewModel.onSearchQueryChanged(query)
+        return true
     }
 
     private fun setupRecyclerView() {
@@ -107,13 +114,5 @@ class NotesList : Fragment() {
             }
         })
         itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        _adapter = null
-        _recyclerView = null
-        layoutManagerSwitch.onDestroy()
     }
 }
