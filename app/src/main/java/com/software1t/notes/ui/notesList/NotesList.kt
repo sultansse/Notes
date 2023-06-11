@@ -100,16 +100,18 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.absoluteAdapterPosition
+                val position = viewHolder.bindingAdapterPosition
 
                 if (direction == ItemTouchHelper.LEFT) {
                     // Perform delete action
-                    Toast.makeText(requireContext(), "Deleted item ", Toast.LENGTH_SHORT).show()
-                    adapter.removeItem(position)
+                    Toast.makeText(requireContext(), "Deleted item", Toast.LENGTH_SHORT).show()
+                    val note = adapter.currentList[position]
+                    viewModel.onDeleteNote(note.id)
                 } else if (direction == ItemTouchHelper.RIGHT) {
                     // Perform archive action
                     Toast.makeText(requireContext(), "Archived item", Toast.LENGTH_SHORT).show()
-                    adapter.archiveItem(position)
+                    val note = adapter.currentList[position]
+                    viewModel.onDeleteNote(note.id)
                 }
             }
         })

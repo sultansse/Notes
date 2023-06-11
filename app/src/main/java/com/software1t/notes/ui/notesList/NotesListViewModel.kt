@@ -43,8 +43,26 @@ class NotesListViewModel(
         updateFilteredNotes()
     }
 
+    fun onDeleteNote(noteId: Long) {
+        viewModelScope.launch {
+            notesRepository.deleteNoteById(noteId)
+        }
+    }
+
     fun onSearchQueryChanged(query: String?) {
         this.query.value = query
+    }
+
+    fun onLayoutManagerIconClick() {
+        _isGrid.value = _isGrid.value?.not()
+
+        // Save the layout manager state
+        val layoutManagerValue = if (_isGrid.value == true) {
+            "grid"
+        } else {
+            "linear"
+        }
+        sharedPreferences.edit().putString(layoutManagerKey, layoutManagerValue).apply()
     }
 
     private fun updateFilteredNotes() {
@@ -74,18 +92,6 @@ class NotesListViewModel(
         }
         isDataEmpty.value = filteredNotes.isEmpty()
         _notes.value = filteredNotes
-    }
-
-    fun onLayoutManagerIconClick() {
-        _isGrid.value = _isGrid.value?.not()
-
-        // Save the layout manager state
-        val layoutManagerValue = if (_isGrid.value == true) {
-            "grid"
-        } else {
-            "linear"
-        }
-        sharedPreferences.edit().putString(layoutManagerKey, layoutManagerValue).apply()
     }
 
     private fun restoreLayoutManagerState() {

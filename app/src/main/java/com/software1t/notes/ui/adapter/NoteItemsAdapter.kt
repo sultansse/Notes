@@ -26,20 +26,4 @@ class NoteItemsAdapter(
         val item = getItem(position)
         holder.bind(item)
     }
-
-    fun removeItem(position: Int) {
-        val items = currentList.toMutableList()
-        items.removeAt(position)
-        // Perform delete (trash) action on the item
-        // ...
-        submitList(items)
-    }
-
-    fun archiveItem(position: Int) {
-        val items = currentList.toMutableList()
-        val archivedItem = items.removeAt(position)
-        // Perform archive action on the item
-        // ...
-        submitList(items)
-    }
 }

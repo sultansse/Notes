@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
+    android:background="@null"
     app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp"
-    android:background="@null"
     app:strokeColor="@color/gray"
     app:strokeWidth="1dp">
 
@@ -23,10 +22,8 @@
             android:id="@+id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:maxLines="1"
+            android:layout_margin="16dp"
+            android:textStyle="bold"
             tools:text="Some title about note" />
 
         <com.google.android.material.textview.MaterialTextView

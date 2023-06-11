@@ -15,19 +15,18 @@ class EditNoteViewModel(
     private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
-    private val newNote = NotesEntity(
-        id = 0,
-        title = "",
-        content = "",
-        lastModifiedTime = System.currentTimeMillis()
-    )
 
     val currentNote: LiveData<NotesEntity> = if (noteId == -1L) {
+        val newNote = NotesEntity(
+            id = 0,
+            title = "",
+            content = "",
+            lastModifiedTime = System.currentTimeMillis()
+        )
         MutableLiveData(newNote)
     } else {
         notesRepository.getNoteById(noteId)
     }
-
 
     private val isNewNote = (noteId == -1L)
 
