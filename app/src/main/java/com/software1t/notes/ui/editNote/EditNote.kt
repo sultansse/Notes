@@ -22,27 +22,27 @@ class EditNote : Fragment() {
 
     private val viewModel: EditNoteViewModel by viewModel {
         parametersOf(
-            requireActivity().application,
-            noteId
+            requireActivity().application, EditNoteArgs.fromBundle(requireArguments()).noteId
         )
     }
 
-    private var noteId: Long = -1L
-    private var isNewNote = (noteId == -1L)
+    private var isNewNote = false
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditNoteBinding.inflate(inflater, container, false)
-        noteId = EditNoteArgs.fromBundle(requireArguments()).noteId
-        isNewNote = (noteId == -1L)
         return binding.root
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.isNewNote.observe(viewLifecycleOwner) {
+            isNewNote = (it)
+        }
 
         setTopToolbar()
         setSaveButton()
@@ -63,10 +63,19 @@ class EditNote : Fragment() {
 
 
         viewModel.currentNote.observe(viewLifecycleOwner) { note ->
-            binding.titleEt.setText(if (isNewNote) "" else note.title)
-            binding.contentEt.setText(if (isNewNote) "" else note.content)
-            binding.lastModifiedTimeTv.text =
-                "last changes:\n ${getFormattedTimestamp(if (isNewNote) System.currentTimeMillis() else note.lastModifiedTime)}"
+            with(binding) {
+                if (isNewNote) {
+                    titleEt.setText("")
+                    contentEt.setText("")
+                    lastModifiedTimeTv.text =
+                        "last changes:\n ${getFormattedTimestamp(System.currentTimeMillis())}"
+                } else {
+                    titleEt.setText(note.title)
+                    contentEt.setText(note.content)
+                    lastModifiedTimeTv.text =
+                        "last changes:\n ${getFormattedTimestamp(note.lastModifiedTime)}"
+                }
+            }
         }
     }
 

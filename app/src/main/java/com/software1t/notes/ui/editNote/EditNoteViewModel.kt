@@ -7,39 +7,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
+import com.software1t.notes.utils.Constants.Companion.NEW_EMPTY_NOTE_ID
 import kotlinx.coroutines.launch
 
 class EditNoteViewModel(
-    application: Application,
-    private val noteId: Long,
-    private val notesRepository: NotesRepository
+    application: Application, private val noteId: Long, private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
+    private var _isNewNote: LiveData<Boolean>? = MutableLiveData((noteId == NEW_EMPTY_NOTE_ID))
+    val isNewNote get() = _isNewNote!!
 
-    val currentNote: LiveData<NotesEntity> = if (noteId == -1L) {
-        val newNote = NotesEntity(
-            id = 0,
-            title = "",
-            content = "",
-            lastModifiedTime = System.currentTimeMillis()
-        )
-        MutableLiveData(newNote)
-    } else {
-        notesRepository.getNoteById(noteId)
-    }
+    private val isNewNoteValue = isNewNote.value!!
 
-    private val isNewNote = (noteId == -1L)
+    val currentNote: LiveData<NotesEntity> = getCurrentNote(isNewNoteValue, noteId)
+
 
     fun onSaveNote(title: String, content: String, lastModifiedTime: Long) {
         viewModelScope.launch {
             val note = NotesEntity(
-                id = if (isNewNote) 0 else noteId,
+                id = if (isNewNoteValue) 0 else noteId,
                 title = title,
                 content = content,
                 lastModifiedTime = lastModifiedTime
             )
 
-            if (isNewNote) {
+            if (isNewNoteValue) {
                 notesRepository.insertNote(note)
             } else {
                 notesRepository.updateNote(note)
@@ -63,6 +55,19 @@ class EditNoteViewModel(
                 lastModifiedTime = System.currentTimeMillis()
             )
             notesRepository.insertNote(newNote)
+        }
+    }
+
+    private fun getCurrentNote(isNewNoteValue: Boolean, noteId: Long): LiveData<NotesEntity> {
+
+        val newNote = NotesEntity(
+            id = 0, title = "", content = "", lastModifiedTime = System.currentTimeMillis()
+        )
+
+        return if (isNewNoteValue) {
+            MutableLiveData(newNote)
+        } else {
+            notesRepository.getNoteById(noteId)
         }
     }
 }

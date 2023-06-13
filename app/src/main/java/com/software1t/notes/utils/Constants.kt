@@ -6,5 +6,8 @@ class Constants {
         // Room Database
         const val DATABASE_NAME = "notes_database"
         const val NOTES_TABLE = "notes_table"
+
+        // Notes
+       const val NEW_EMPTY_NOTE_ID : Long = -1L
     }
 }
