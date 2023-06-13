@@ -1,6 +1,6 @@
 package com.software1t.notes.ui.fragment_note_list
 
-class SwipeConfiguration(
+data class SwipeConfiguration(
     val swipeToLeftAction: SwipeAction,
     val swipeToRightAction: SwipeAction
 )

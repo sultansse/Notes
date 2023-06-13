@@ -49,7 +49,7 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupRecyclerViewGestures()
+        setupRecyclerViewGestures(false)
 
         viewModel.notes.observe(viewLifecycleOwner) { notes ->
             adapter.submitList(notes)
@@ -110,9 +110,10 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         recyclerView.adapter = adapter
     }
 
-    private fun setupRecyclerViewGestures() {
-        val itemTouchHelper = ItemTouchHelper(object :
-            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    private fun setupRecyclerViewGestures(swipable: Boolean) {
+        val swipeFlags = if (swipable) (ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) else 0
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, swipeFlags) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -154,5 +155,7 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
         })
+
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
-    }}
+    }
+}

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentSettingsBinding
@@ -28,6 +29,11 @@ class Settings : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val options = resources.getStringArray(R.array.dropdown_options)
 
+        binding.switchSwipes.setOnCheckedChangeListener { _, isChecked ->
+            val swipable = isChecked
+        }
+
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
@@ -37,7 +43,7 @@ class Settings : Fragment() {
         binding.spinnerOptionsLeft.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedOption = parent?.getItemAtPosition(position).toString()
-                updateSwipeConfiguration(selectedOption, SwipeAction.Archive)
+                updateSwipeConfiguration(selectedOption, SwipeAction.Archive, binding.spinnerOptionsLeft)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -48,7 +54,7 @@ class Settings : Fragment() {
         binding.spinnerOptionsRight.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedOption = parent?.getItemAtPosition(position).toString()
-                updateSwipeConfiguration(selectedOption, SwipeAction.Delete)
+                updateSwipeConfiguration(selectedOption, SwipeAction.Delete, binding.spinnerOptionsRight)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -58,18 +64,25 @@ class Settings : Fragment() {
 
     }
 
-    private fun updateSwipeConfiguration(selectedOption: String, swipeAction: SwipeAction) {
-        val swipeConfiguration = when (selectedOption) {
-            "Archive" -> SwipeConfiguration(swipeToLeftAction = SwipeAction.Archive, swipeToRightAction = SwipeAction.Archive)
-            "Delete" -> SwipeConfiguration(swipeToLeftAction = SwipeAction.Delete, swipeToRightAction = SwipeAction.Delete)
-            "Custom" -> SwipeConfiguration(swipeToLeftAction = SwipeAction.Custom, swipeToRightAction = SwipeAction.Custom)
+    private fun updateSwipeConfiguration(selectedOption: String, swipeAction: SwipeAction, spinner: Spinner) {
+        val swipeToLeftAction = when (selectedOption) {
+            "Archive" -> SwipeAction.Archive
+            "Delete" -> SwipeAction.Delete
+            "Custom" -> SwipeAction.Custom
             // Add more cases for other options or custom actions
-            else -> SwipeConfiguration(swipeToLeftAction = swipeAction, swipeToRightAction = swipeAction)
+            else -> swipeAction
         }
 
+        val swipeToRightAction = when (spinner) {
+            binding.spinnerOptionsLeft -> swipeToLeftAction
+            binding.spinnerOptionsRight -> swipeAction
+            else -> swipeAction
+        }
+
+        val swipeConfiguration = SwipeConfiguration(swipeToLeftAction = swipeToLeftAction, swipeToRightAction = swipeToRightAction)
+
         (requireActivity() as MainActivity).updateSwipeConfiguration(swipeConfiguration)
-    }
-    override fun onDestroyView() {
+    }    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
