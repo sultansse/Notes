@@ -12,4 +12,7 @@
     <string name="mock_date">last changes: 21.06.2022 13:46:22</string>
     <string name="more">More</string>
     <string name="pin">Pin</string>
+    <string name="notes">Notes</string>
+    <string name="archive">Archive</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:id="@+id/notifications"
-        android:icon="@drawable/ic_notifications_outlined"
-        android:title="@string/notifications" />
+        android:id="@+id/notes"
+        android:icon="@drawable/ic_notes"
+        android:title="@string/notes" />
+    <item
+        android:id="@+id/archive"
+        android:icon="@drawable/ic_archive"
+        android:title="@string/archive" />
+    <item
+        android:id="@+id/trash"
+        android:icon="@drawable/ic_delete_outlined"
+        android:title="@string/delete" />
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_settings_outlined"
+        android:icon="@drawable/ic_settings"
         android:title="@string/settings" />
-    <item
-        android:id="@+id/questions"
-        android:icon="@drawable/ic_question_mark"
-        android:title="@string/questions" />
-    <item
-        android:id="@+id/rate"
-        android:icon="@drawable/ic_star_outlined"
-        android:title="@string/rate" />
 </menu>
