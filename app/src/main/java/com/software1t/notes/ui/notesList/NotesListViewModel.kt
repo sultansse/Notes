@@ -20,14 +20,22 @@ class NotesListViewModel(
     private val notesRepository: NotesRepository
 ) : AndroidViewModel(application) {
 
+    private val sharedPreferences =
+        application.getSharedPreferences("NotesListPrefs", Context.MODE_PRIVATE)
+    private val layoutPrefKey = "LAYOUT_MANAGER"
+
     private val allNotes: LiveData<List<NotesEntity>> = notesRepository.getAllNotes()
 
-    private val sharedPreferences =
-        application.getSharedPreferences("HomeFragmentPrefs", Context.MODE_PRIVATE)
-    private val layoutManagerKey = "layoutManager"
+    private val _isGrid = MutableLiveData<Boolean>().apply {
+        value = sharedPreferences.getBoolean(layoutPrefKey, false) // Initialize with default value from SharedPreferences
+    }
+    val isGrid: LiveData<Boolean> get() = _isGrid
 
-    private val _isGrid = MutableLiveData(false)
-    val isGrid: LiveData<Boolean> = _isGrid
+    private fun saveIsGrid(value: Boolean) {
+        viewModelScope.launch {
+            sharedPreferences.edit().putBoolean(layoutPrefKey, value).apply()
+        }
+    }
 
     private val query = MutableLiveData<String>()
     private val isDataEmpty = MutableLiveData(false)
@@ -39,7 +47,7 @@ class NotesListViewModel(
 //        deleteAllMockData()
 //        insertMockData()
 
-        restoreLayoutManagerState()
+
         updateFilteredNotes()
     }
 
@@ -54,15 +62,11 @@ class NotesListViewModel(
     }
 
     fun onLayoutManagerIconClick() {
-        _isGrid.value = _isGrid.value?.not()
+        val isGridValue = _isGrid.value ?: false
+        val newIsGridValue = isGridValue.not()
+        _isGrid.value = newIsGridValue
 
-        // Save the layout manager state
-        val layoutManagerValue = if (_isGrid.value == true) {
-            "grid"
-        } else {
-            "linear"
-        }
-        sharedPreferences.edit().putString(layoutManagerKey, layoutManagerValue).apply()
+        saveIsGrid(newIsGridValue)
     }
 
     private fun updateFilteredNotes() {
@@ -94,10 +98,6 @@ class NotesListViewModel(
         _notes.value = filteredNotes
     }
 
-    private fun restoreLayoutManagerState() {
-        val layoutManagerValue = sharedPreferences.getString(layoutManagerKey, null)
-        _isGrid.value = layoutManagerValue == "grid"
-    }
 
     private fun insertMockData() {
         viewModelScope.launch(Dispatchers.IO) {

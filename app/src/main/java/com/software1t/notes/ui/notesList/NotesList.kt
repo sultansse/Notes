@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentNoteListBinding
-import com.software1t.notes.domain.useсases.LayoutManagerSwitch
 import com.software1t.notes.domain.useсases.NavigationDrawerHelper
 import com.software1t.notes.ui.adapter.NoteItemsAdapter
 import com.software1t.notes.utils.Constants.Companion.NEW_EMPTY_NOTE_ID
@@ -30,7 +32,6 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
     private var _adapter: NoteItemsAdapter? = null
     private val adapter get() = _adapter!!
 
-    private lateinit var layoutManagerSwitch: LayoutManagerSwitch
 
     private val viewModel: NotesListViewModel by viewModel { parametersOf(requireActivity().application) }
 
@@ -47,21 +48,37 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         setupRecyclerView()
         setupRecyclerViewGestures()
 
-        layoutManagerSwitch = LayoutManagerSwitch(binding, recyclerView, viewModel)
-
         viewModel.notes.observe(viewLifecycleOwner) { notes ->
             adapter.submitList(notes)
         }
 
-        binding.fab.setOnClickListener {
-            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(NEW_EMPTY_NOTE_ID)
-            findNavController().navigate(action)
-        }
+        viewModel.isGrid.observe(viewLifecycleOwner) {
 
-        binding.searchView.setOnQueryTextListener(this)
+            val isGridValue = it!!
+
+            if (isGridValue) {
+                binding.layoutManagerIconBtn.setImageResource(R.drawable.ic_layout_linearview)
+                recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+            } else {
+                binding.layoutManagerIconBtn.setImageResource(R.drawable.ic_layout_gridview)
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
 
         val navigationDrawerHelper = NavigationDrawerHelper(requireActivity() as AppCompatActivity)
         navigationDrawerHelper.setupNavigationDrawer()
+
+        binding.searchView.setOnQueryTextListener(this)
+
+        binding.layoutManagerIconBtn.setOnClickListener {
+            viewModel.onLayoutManagerIconClick()
+        }
+
+        binding.fab.setOnClickListener {
+            val action =
+                NotesListDirections.actionNoteListFragmentToEditNoteFragment(NEW_EMPTY_NOTE_ID)
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {
@@ -69,7 +86,6 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         _binding = null
         _adapter = null
         _recyclerView = null
-        layoutManagerSwitch.onDestroy()
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
