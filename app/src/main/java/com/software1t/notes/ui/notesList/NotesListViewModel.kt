@@ -30,18 +30,20 @@ class NotesListViewModel(
     }
     val isGrid: LiveData<Boolean> get() = _isGrid
 
-    private val _notes = MediatorLiveData<List<NoteItem>>()
+    private val _notes = MediatorLiveData<List<NoteItem>>().apply {
+        addSource(allNotes) { notes ->
+            val noteItems = notes.map { note ->
+                // Convert NotesEntity to NoteItem
+                NoteItem(note.id, note.title, note.content)
+            }
+            postValue(noteItems)
+        }
+    }
     val notes: LiveData<List<NoteItem>> = _notes
-
-    private val query = MutableLiveData<String>()
-    private val isDataEmpty = MutableLiveData(false)
 
     init {
 //        deleteAllMockData()
 //        insertMockData()
-
-
-        updateFilteredNotes()
     }
 
     fun onDeleteNote(noteId: Long) {
@@ -56,36 +58,15 @@ class NotesListViewModel(
     }
 
     fun onSearchQueryChanged(query: String?) {
-        this.query.value = query
-    }
-
-    private fun updateFilteredNotes() {
-        _notes.addSource(allNotes) { noteList ->
-            filterAndSetNotes(noteList)
+        val filteredNotes = allNotes.value?.filter { note ->
+            note.title.contains(query.toString(), ignoreCase = true) || note.content.contains(query.toString(), ignoreCase = true)
+        }?.map { note ->
+            // Convert NotesEntity to NoteItem
+            NoteItem(note.id, note.title, note.content)
         }
-        _notes.addSource(query) {
-            val noteList = allNotes.value.orEmpty()
-            filterAndSetNotes(noteList)
+        filteredNotes?.let {
+            _notes.postValue(it)
         }
-    }
-
-    private fun filterAndSetNotes(noteList: List<NotesEntity>) {
-        val currentQuery = query.value?.lowercase()
-        val filteredNotes = if (currentQuery.isNullOrBlank()) {
-            noteList.map { note ->
-                NoteItem(note.id, note.title, note.content)
-            }
-        } else {
-            val lowerCaseQuery = currentQuery.lowercase()
-            noteList.filter { note ->
-                note.title.lowercase().contains(lowerCaseQuery) || note.content.lowercase()
-                    .contains(lowerCaseQuery)
-            }.map { note ->
-                NoteItem(note.id, note.title, note.content)
-            }
-        }
-        isDataEmpty.value = filteredNotes.isEmpty()
-        _notes.value = filteredNotes
     }
 
     private fun saveIsGrid(value: Boolean) {
