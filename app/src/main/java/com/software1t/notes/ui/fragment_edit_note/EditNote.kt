@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.editNote
+package com.software1t.notes.ui.fragment_edit_note
 
 import android.annotation.SuppressLint
 import android.os.Bundle

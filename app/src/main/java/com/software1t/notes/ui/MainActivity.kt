@@ -6,13 +6,15 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.software1t.notes.R
 import com.software1t.notes.databinding.ActivityMainBinding
+import com.software1t.notes.ui.fragment_note_list.SwipeAction
+import com.software1t.notes.ui.fragment_note_list.SwipeConfiguration
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-
+    lateinit var swipeConfiguration: SwipeConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,15 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         navController = navHostFragment.navController
+
+        swipeConfiguration = SwipeConfiguration(
+            swipeToLeftAction = SwipeAction.Archive,
+            swipeToRightAction = SwipeAction.Delete
+        )
+    }
+
+    fun updateSwipeConfiguration(configuration: SwipeConfiguration) {
+        swipeConfiguration = configuration
     }
 
     override fun onSupportNavigateUp(): Boolean {

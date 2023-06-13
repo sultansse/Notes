@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.notesList
+package com.software1t.notes.ui.fragment_note_list
 
 import android.app.Application
 import android.content.Context
@@ -54,7 +54,7 @@ class NotesListViewModel(
 
     fun onLayoutManagerIconClick() {
         _isGrid.value = _isGrid.value?.not() ?: false
-        saveIsGrid(_isGrid.value!!)
+        saveLayoutManagerState(_isGrid.value!!)
     }
 
     fun onSearchQueryChanged(query: String?) {
@@ -69,7 +69,7 @@ class NotesListViewModel(
         }
     }
 
-    private fun saveIsGrid(value: Boolean) {
+    private fun saveLayoutManagerState(value: Boolean) {
         viewModelScope.launch {
             sharedPreferences.edit().putBoolean(LAYOUT_PREF_KEY, value).apply()
         }

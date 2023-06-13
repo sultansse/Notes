@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment_settings.Settings">
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_swipes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:checked="true"
+        android:text="Turn on swipes?"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/swipe_to_left_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action for swipe to LEFT"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_swipes" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner_options_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="32dp"
+        app:layout_constraintStart_toEndOf="@+id/swipe_to_left_tv"
+        app:layout_constraintTop_toBottomOf="@+id/switch_swipes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/swipe_to_right_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Action for swipe to RIGHT"
+        android:textSize="18sp"
+        android:layout_margin="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_options_left" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner_options_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="32dp"
+        app:layout_constraintStart_toEndOf="@+id/swipe_to_right_tv"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_options_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

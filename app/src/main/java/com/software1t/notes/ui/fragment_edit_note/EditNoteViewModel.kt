@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.editNote
+package com.software1t.notes.ui.fragment_edit_note
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.ListAdapter
 import com.software1t.notes.databinding.NoteItemBinding
+import com.software1t.notes.ui.fragment_note_list.NotesListDirections
 import com.software1t.notes.ui.model.NoteItem
-import com.software1t.notes.ui.notesList.NotesListDirections
 
 class NoteItemsAdapter(
     private val navController: NavController

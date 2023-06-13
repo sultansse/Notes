@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.notesList
+package com.software1t.notes.ui.fragment_note_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.software1t.notes.R
 import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.domain.useсases.NavigationDrawerHelper
+import com.software1t.notes.ui.MainActivity
 import com.software1t.notes.ui.adapter.NoteItemsAdapter
 import com.software1t.notes.utils.Constants.Companion.NEW_EMPTY_NOTE_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,8 +33,10 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
     private var _adapter: NoteItemsAdapter? = null
     private val adapter get() = _adapter!!
 
-
     private val viewModel: NotesListViewModel by viewModel { parametersOf(requireActivity().application) }
+
+    // In NoteListFragment
+    private lateinit var swipeConfiguration: SwipeConfiguration
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -79,6 +82,9 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
                 NotesListDirections.actionNoteListFragmentToEditNoteFragment(NEW_EMPTY_NOTE_ID)
             findNavController().navigate(action)
         }
+
+        swipeConfiguration = (requireActivity() as MainActivity).swipeConfiguration
+
     }
 
     override fun onDestroyView() {
@@ -119,19 +125,34 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
 
-                if (direction == ItemTouchHelper.LEFT) {
-                    // Perform delete action
-                    Toast.makeText(requireContext(), "Deleted item", Toast.LENGTH_SHORT).show()
-                    val note = adapter.currentList[position]
-                    viewModel.onDeleteNote(note.id)
-                } else if (direction == ItemTouchHelper.RIGHT) {
-                    // Perform archive action
-                    Toast.makeText(requireContext(), "Archived item", Toast.LENGTH_SHORT).show()
-                    val note = adapter.currentList[position]
-                    viewModel.onDeleteNote(note.id)
+                val swipeAction = when (direction) {
+                    ItemTouchHelper.LEFT -> swipeConfiguration.swipeToLeftAction
+                    ItemTouchHelper.RIGHT -> swipeConfiguration.swipeToRightAction
+                    else -> null
+                }
+
+                swipeAction?.let { action ->
+                    when (action) {
+                        is SwipeAction.Archive -> {
+                            // Perform archive action
+                            Toast.makeText(requireContext(), "Archived item", Toast.LENGTH_SHORT).show()
+                            val note = adapter.currentList[position]
+                            viewModel.onDeleteNote(note.id) // todo archive
+                        }
+                        is SwipeAction.Delete -> {
+                            // Perform delete action
+                            Toast.makeText(requireContext(), "Deleted item", Toast.LENGTH_SHORT).show()
+                            val note = adapter.currentList[position]
+                            viewModel.onDeleteNote(note.id)
+                        }
+                        is SwipeAction.Custom -> {
+                            // Perform custom action
+                            Toast.makeText(requireContext(), "Custom action", Toast.LENGTH_SHORT).show()
+                            // Implement your custom action logic here
+                        }
+                    }
                 }
             }
         })
-        itemTouchHelper.attachToRecyclerView(recyclerView)
-    }
-}
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+    }}

@@ -1,8 +1,8 @@
 package com.software1t.notes.di
 
 import android.app.Application
-import com.software1t.notes.ui.editNote.EditNoteViewModel
-import com.software1t.notes.ui.notesList.NotesListViewModel
+import com.software1t.notes.ui.fragment_edit_note.EditNoteViewModel
+import com.software1t.notes.ui.fragment_note_list.NotesListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
