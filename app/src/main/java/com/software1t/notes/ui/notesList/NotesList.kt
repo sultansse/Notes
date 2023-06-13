@@ -15,6 +15,7 @@ import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.domain.useсases.LayoutManagerSwitch
 import com.software1t.notes.domain.useсases.NavigationDrawerHelper
 import com.software1t.notes.ui.adapter.NoteItemsAdapter
+import com.software1t.notes.utils.Constants.Companion.NEW_EMPTY_NOTE_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -53,7 +54,7 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         }
 
         binding.fab.setOnClickListener {
-            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment()
+            val action = NotesListDirections.actionNoteListFragmentToEditNoteFragment(NEW_EMPTY_NOTE_ID)
             findNavController().navigate(action)
         }
 
