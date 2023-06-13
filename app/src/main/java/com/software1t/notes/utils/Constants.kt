@@ -8,6 +8,6 @@ class Constants {
         const val NOTES_TABLE = "notes_table"
 
         // Notes
-       const val NEW_EMPTY_NOTE_ID : Long = -1L
+       const val NEW_EMPTY_NOTE_ID : Long = 0
     }
 }

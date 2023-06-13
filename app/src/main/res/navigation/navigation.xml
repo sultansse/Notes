@@ -10,7 +10,7 @@
         android:label="Edit note">
         <argument
             android:name="note_id"
-            android:defaultValue="-1L"
+            android:defaultValue="0L"
             app:argType="long" />
     </fragment>
 

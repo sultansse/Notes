@@ -25,7 +25,7 @@ class EditNoteViewModel(
     fun onSaveNote(title: String, content: String, lastModifiedTime: Long) {
         viewModelScope.launch {
             val note = NotesEntity(
-                id = if (isNewNoteValue) 0 else noteId,
+                id = if (isNewNoteValue) NEW_EMPTY_NOTE_ID else noteId,
                 title = title,
                 content = content,
                 lastModifiedTime = lastModifiedTime
@@ -50,7 +50,7 @@ class EditNoteViewModel(
             val currentNoteValue = currentNote.value!!
 
             val newNote = currentNoteValue.copy(
-                id = 0,
+                id = NEW_EMPTY_NOTE_ID,
                 title = "${currentNoteValue.title} (Copy)",
                 lastModifiedTime = System.currentTimeMillis()
             )
@@ -61,7 +61,7 @@ class EditNoteViewModel(
     private fun getCurrentNote(isNewNoteValue: Boolean, noteId: Long): LiveData<NotesEntity> {
 
         val newNote = NotesEntity(
-            id = 0, title = "", content = "", lastModifiedTime = System.currentTimeMillis()
+            id = NEW_EMPTY_NOTE_ID, title = "", content = "", lastModifiedTime = System.currentTimeMillis()
         )
 
         return if (isNewNoteValue) {
