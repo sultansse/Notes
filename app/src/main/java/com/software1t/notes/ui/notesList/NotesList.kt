@@ -88,12 +88,12 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
         _recyclerView = null
     }
 
-    override fun onQueryTextChange(newText: String?): Boolean {
-        viewModel.onSearchQueryChanged(newText)
+    override fun onQueryTextChange(query: String): Boolean {
+        viewModel.onSearchQueryChanged(query)
         return true
     }
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
+    override fun onQueryTextSubmit(query: String): Boolean {
         viewModel.onSearchQueryChanged(query)
         return true
     }

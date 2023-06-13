@@ -11,9 +11,9 @@ import com.software1t.notes.data.local.MockData
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
 import com.software1t.notes.ui.model.NoteItem
+import com.software1t.notes.utils.Constants.Companion.LAYOUT_PREF_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 
 class NotesListViewModel(
     application: Application,
@@ -22,26 +22,19 @@ class NotesListViewModel(
 
     private val sharedPreferences =
         application.getSharedPreferences("NotesListPrefs", Context.MODE_PRIVATE)
-    private val layoutPrefKey = "LAYOUT_MANAGER"
 
     private val allNotes: LiveData<List<NotesEntity>> = notesRepository.getAllNotes()
 
     private val _isGrid = MutableLiveData<Boolean>().apply {
-        value = sharedPreferences.getBoolean(layoutPrefKey, false) // Initialize with default value from SharedPreferences
+        value = sharedPreferences.getBoolean(LAYOUT_PREF_KEY, false)
     }
     val isGrid: LiveData<Boolean> get() = _isGrid
 
-    private fun saveIsGrid(value: Boolean) {
-        viewModelScope.launch {
-            sharedPreferences.edit().putBoolean(layoutPrefKey, value).apply()
-        }
-    }
+    private val _notes = MediatorLiveData<List<NoteItem>>()
+    val notes: LiveData<List<NoteItem>> = _notes
 
     private val query = MutableLiveData<String>()
     private val isDataEmpty = MutableLiveData(false)
-
-    private val _notes = MediatorLiveData<List<NoteItem>>()
-    val notes: LiveData<List<NoteItem>> = _notes
 
     init {
 //        deleteAllMockData()
@@ -57,16 +50,13 @@ class NotesListViewModel(
         }
     }
 
-    fun onSearchQueryChanged(query: String?) {
-        this.query.value = query
+    fun onLayoutManagerIconClick() {
+        _isGrid.value = _isGrid.value?.not() ?: false
+        saveIsGrid(_isGrid.value!!)
     }
 
-    fun onLayoutManagerIconClick() {
-        val isGridValue = _isGrid.value ?: false
-        val newIsGridValue = isGridValue.not()
-        _isGrid.value = newIsGridValue
-
-        saveIsGrid(newIsGridValue)
+    fun onSearchQueryChanged(query: String?) {
+        this.query.value = query
     }
 
     private fun updateFilteredNotes() {
@@ -98,6 +88,11 @@ class NotesListViewModel(
         _notes.value = filteredNotes
     }
 
+    private fun saveIsGrid(value: Boolean) {
+        viewModelScope.launch {
+            sharedPreferences.edit().putBoolean(LAYOUT_PREF_KEY, value).apply()
+        }
+    }
 
     private fun insertMockData() {
         viewModelScope.launch(Dispatchers.IO) {
