@@ -28,7 +28,7 @@ class NavigationDrawerHelper(private val activity: AppCompatActivity) {
     }
 
     private fun setupNavigationItemSelected() {
-        val navController = activity.findNavController(R.id.nav_host_fragment_activity_main)
+        val navController = activity.findNavController(R.id.nav_host_fragment)
 
         navView.setNavigationItemSelectedListener { menuItem ->
             NavigationUI.onNavDestinationSelected(menuItem, navController)

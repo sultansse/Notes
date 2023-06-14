@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), SwipeConfigurationCallback {
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         swipeConfiguration = SwipeConfiguration(
