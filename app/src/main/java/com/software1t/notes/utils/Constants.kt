@@ -10,5 +10,6 @@ class Constants {
         // Notes
         const val NEW_EMPTY_NOTE_ID: Long = 0
         const val LAYOUT_PREF_KEY = "LAYOUT_MANAGER"
+        const val SWIPEABILITY_PREF_KEY = "SWIPEABLITY"
     }
 }
