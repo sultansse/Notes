@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment_settings.Settings">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/top_toolbar"
+        android:layout_width="match_parent"
+        android:transitionName="@string/settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <!--    SWIPES   -->
     <TextView
         android:id="@+id/tv_header_swipes"
@@ -19,7 +30,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/top_toolbar" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switch_swipes"

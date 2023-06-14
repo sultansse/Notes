@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.software1t.notes.databinding.FragmentSettingsBinding
 import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeAction
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -34,6 +36,8 @@ class Settings : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTopToolbar()
+
         val options = listOf("Delete", "Archive", "Custom")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -59,6 +63,18 @@ class Settings : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setTopToolbar() {
+        val topToolbar = binding.topToolbar
+        (requireActivity() as AppCompatActivity).apply {
+            setSupportActionBar(topToolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+
+        topToolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun createItemSelectedListener(swipeAction: SwipeAction, spinner: Spinner) =
