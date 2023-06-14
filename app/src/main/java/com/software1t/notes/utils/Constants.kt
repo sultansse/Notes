@@ -9,7 +9,12 @@ class Constants {
 
         // Notes
         const val NEW_EMPTY_NOTE_ID: Long = 0
+
+        // SharedPreferences
+        const val SETTINGS_PREFS = "SETTINGS_PREFS"
+        const val NOTE_LIST_PREFS = "NOTE_LIST_PREFS"
+
         const val LAYOUT_PREF_KEY = "LAYOUT_MANAGER"
-        const val SWIPEABILITY_PREF_KEY = "SWIPEABLITY"
+        const val SWIPE_PREF_KEY = "SWIPE_GESTURES"
     }
 }

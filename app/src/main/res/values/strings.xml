@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Notes</string>
-    <string name="notifications">Notifications</string>
     <string name="settings">Settings</string>
-    <string name="questions">Frequently Asked Questions</string>
-    <string name="rate">Rate us</string>
-    <string name="header_nav_drawer">Notes</string>
-    <string name="header_nav_drawer_desc">created with love</string>
     <string name="add">Add</string>
     <string name="color">Color</string>
     <string name="mock_date">last changes: 21.06.2022 13:46:22</string>
@@ -15,13 +10,4 @@
     <string name="notes">Notes</string>
     <string name="archive">Archive</string>
     <string name="delete">Delete</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="dropdown_options">
-        <item>Delete</item>
-        <item>Archive</item>
-        <item>Custom</item>
-        <!-- Add more options if needed -->
-    </string-array>
-
 </resources>

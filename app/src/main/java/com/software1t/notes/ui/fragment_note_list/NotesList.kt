@@ -19,8 +19,11 @@ import com.software1t.notes.databinding.FragmentNoteListBinding
 import com.software1t.notes.domain.useсases.NavigationDrawerHelper
 import com.software1t.notes.ui.MainActivity
 import com.software1t.notes.ui.adapter.NoteItemsAdapter
+import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeAction
+import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeConfiguration
 import com.software1t.notes.utils.Constants.Companion.NEW_EMPTY_NOTE_ID
-import com.software1t.notes.utils.Constants.Companion.SWIPEABILITY_PREF_KEY
+import com.software1t.notes.utils.Constants.Companion.SETTINGS_PREFS
+import com.software1t.notes.utils.Constants.Companion.SWIPE_PREF_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -52,9 +55,9 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
 
         setupRecyclerView()
         val sharedPreferences =
-            requireActivity().getSharedPreferences(SWIPEABILITY_PREF_KEY, Context.MODE_PRIVATE)
+            requireActivity().getSharedPreferences(SETTINGS_PREFS, Context.MODE_PRIVATE)
 
-        val swipable = sharedPreferences.getBoolean("GESTURES", true)
+        val swipable = sharedPreferences.getBoolean(SWIPE_PREF_KEY, true)
         setupRecyclerViewGestures(swipable)
 
         viewModel.notes.observe(viewLifecycleOwner) { notes ->

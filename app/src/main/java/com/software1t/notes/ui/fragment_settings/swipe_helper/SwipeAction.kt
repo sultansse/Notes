@@ -1,4 +1,4 @@
-package com.software1t.notes.ui.fragment_note_list
+package com.software1t.notes.ui.fragment_settings.swipe_helper
 
 sealed class SwipeAction {
     object Archive : SwipeAction()

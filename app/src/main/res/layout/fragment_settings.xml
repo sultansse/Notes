@@ -6,53 +6,143 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment_settings.Settings">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch_swipes"
-        android:layout_width="wrap_content"
+    <!--    SWIPES   -->
+    <TextView
+        android:id="@+id/tv_header_swipes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:checked="true"
-        android:text="Turn on swipes?"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Swipes"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_swipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:checked="true"
+        android:text="Turn on swipes?"
+        android:textAlignment="textStart"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header_swipes" />
+
     <TextView
-        android:id="@+id/swipe_to_left_tv"
+        android:id="@+id/tv_left_swipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
         android:text="Action for swipe to LEFT"
         android:textSize="18sp"
-        android:layout_margin="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_swipes" />
 
+<!-- todo make popup instead of spinner -->
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_options_left"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="32dp"
-        app:layout_constraintStart_toEndOf="@+id/swipe_to_left_tv"
-        app:layout_constraintTop_toBottomOf="@+id/switch_swipes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/swipe_to_right_tv"
+        android:id="@+id/spinner_left_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_swipes" />
+
+    <TextView
+        android:id="@+id/tv_right_swipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
         android:text="Action for swipe to RIGHT"
         android:textSize="18sp"
-        android:layout_margin="32dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_options_left" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_left_swipe" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/spinner_options_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="32dp"
-        app:layout_constraintStart_toEndOf="@+id/swipe_to_right_tv"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_options_left"
+        android:id="@+id/spinner_right_options"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_left_options" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider_swipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_right_swipe" />
+
+
+    <!--  Appereance  -->
+    <TextView
+        android:id="@+id/tv_header_appereance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Appereance"
+        android:textAlignment="textStart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/divider_swipes" />
+
+    <TextView
+        android:id="@+id/tv_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Theme: "
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_header_appereance" />
+
+    <TextView
+        android:id="@+id/tv_time_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Time format : 1 day before"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_theme" />
+
+    <TextView
+        android:id="@+id/tv_max_shown_lines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Max shown lines: 3"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time_format" />
+
+    <TextView
+        android:id="@+id/tv_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="16dp"
+        android:text="Text Size : Medium"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_max_shown_lines" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

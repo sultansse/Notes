@@ -6,10 +6,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.software1t.notes.R
 import com.software1t.notes.databinding.ActivityMainBinding
-import com.software1t.notes.ui.fragment_note_list.SwipeAction
-import com.software1t.notes.ui.fragment_note_list.SwipeConfiguration
+import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeAction
+import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeConfiguration
+import com.software1t.notes.ui.fragment_settings.swipe_helper.SwipeConfigurationCallback
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SwipeConfigurationCallback {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +32,8 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    fun updateSwipeConfiguration(configuration: SwipeConfiguration) {
+    override fun updateSwipeConfiguration(configuration: SwipeConfiguration) {
+        // Implement the logic to update the swipe configuration
         swipeConfiguration = configuration
     }
 
