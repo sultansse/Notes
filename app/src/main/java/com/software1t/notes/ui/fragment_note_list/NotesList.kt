@@ -64,10 +64,7 @@ class NotesList : Fragment(), SearchView.OnQueryTextListener {
             adapter.submitList(notes)
         }
 
-        viewModel.isGrid.observe(viewLifecycleOwner) {
-
-            val isGridValue = it!!
-
+        viewModel.isGrid.observe(viewLifecycleOwner) { isGridValue ->
             if (isGridValue) {
                 binding.layoutManagerIconBtn.setImageResource(R.drawable.ic_layout_linearview)
                 recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)

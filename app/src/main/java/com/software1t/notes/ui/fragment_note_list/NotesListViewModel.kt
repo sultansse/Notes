@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.software1t.notes.data.local.MockData
 import com.software1t.notes.data.local.NotesEntity
 import com.software1t.notes.domain.repository.NotesRepository
-import com.software1t.notes.ui.model.NoteItem
+import com.software1t.notes.ui.adapter.NoteItem
 import com.software1t.notes.utils.Constants.Companion.LAYOUT_PREF_KEY
 import com.software1t.notes.utils.Constants.Companion.NOTE_LIST_PREFS
 import kotlinx.coroutines.Dispatchers

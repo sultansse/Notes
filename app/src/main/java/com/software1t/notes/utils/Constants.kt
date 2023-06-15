@@ -11,10 +11,19 @@ class Constants {
         const val NEW_EMPTY_NOTE_ID: Long = 0
 
         // SharedPreferences
-        const val SETTINGS_PREFS = "SETTINGS_PREFS"
-        const val NOTE_LIST_PREFS = "NOTE_LIST_PREFS"
+        const val SETTINGS_PREFS = "Settings_prefs"
+        const val NOTE_LIST_PREFS = "NoteList_prefs"
 
-        const val LAYOUT_PREF_KEY = "LAYOUT_MANAGER"
-        const val SWIPE_PREF_KEY = "SWIPE_GESTURES"
+        const val SWIPE_PREF_KEY = "swipe_gestures"
+        const val LAYOUT_PREF_KEY = "layout_manager"
+
+        // Swipe Actions
+        const val SWIPE_ACTION_ARCHIVE = "Archive"
+        const val SWIPE_ACTION_DELETE = "Delete"
+        const val SWIPE_ACTION_CUSTOM = "Custom"
+
+        // Swipe Directions
+        const val SWIPE_DIRECTION_LEFT = "left"
+        const val SWIPE_DIRECTION_RIGHT = "right"
     }
 }
