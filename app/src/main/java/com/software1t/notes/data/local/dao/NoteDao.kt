@@ -1,7 +1,8 @@
-package com.software1t.notes.data.local
+package com.software1t.notes.data.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.software1t.notes.data.local.entities.NotesEntity
 import com.software1t.notes.utils.Constants
 
 @Dao
@@ -21,8 +22,11 @@ interface NoteDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateNote(notesEntity: NotesEntity)
 
-    @Query("SELECT * FROM ${Constants.NOTES_TABLE}")
-    fun getAllNotes(): LiveData<List<NotesEntity>>
+    @Query("SELECT * FROM ${Constants.NOTES_TABLE} ORDER BY id ASC")
+    fun getAllNotesAsc(): LiveData<List<NotesEntity>>
+
+    @Query("SELECT * FROM ${Constants.NOTES_TABLE} ORDER BY id DESC")
+    fun getAllNotesDesc(): LiveData<List<NotesEntity>>
 
     @Insert
     suspend fun insertAllNotes(notesEntities: List<NotesEntity>)

@@ -5,7 +5,10 @@ class Constants {
     companion object {
         // Room Database
         const val DATABASE_NAME = "notes_database"
+
         const val NOTES_TABLE = "notes_table"
+        const val ARCHIVE_TABLE = "archive_table"
+        const val TRASH_TABLE = "trash_table"
 
         // Notes
         const val NEW_EMPTY_NOTE_ID: Long = 0
@@ -16,6 +19,7 @@ class Constants {
 
         const val SWIPE_PREF_KEY = "swipe_gestures"
         const val LAYOUT_PREF_KEY = "layout_manager"
+        const val NOTES_ORDER_KEY = "notes_order"
 
         // Swipe Actions
         const val SWIPE_ACTION_ARCHIVE = "Archive"

@@ -1,5 +1,7 @@
 package com.software1t.notes.data.local
 
+import com.software1t.notes.data.local.entities.NotesEntity
+
 class MockData {
 
     companion object {

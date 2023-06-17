@@ -1,7 +1,7 @@
 package com.software1t.notes.domain.repository
 
 import androidx.lifecycle.LiveData
-import com.software1t.notes.data.local.NotesEntity
+import com.software1t.notes.data.local.entities.NotesEntity
 
 interface NotesRepository {
 
@@ -15,7 +15,9 @@ interface NotesRepository {
 
     suspend fun updateNote(notesEntity: NotesEntity)
 
-    fun getAllNotes(): LiveData<List<NotesEntity>>
+    fun getAllNotesAsc(): LiveData<List<NotesEntity>>
+
+    fun getAllNotesDesc(): LiveData<List<NotesEntity>>
 
     suspend fun insertAllNotes(notesEntities: List<NotesEntity>)
 
